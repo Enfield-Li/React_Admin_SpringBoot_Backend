@@ -20,9 +20,7 @@ public class Basket {
 
   private Integer quantity;
 
-  @OneToOne
-  @JoinColumn(name = "product_id")
-  private Product product;
+  private Long product_id;
 
   @ManyToOne
   private Command command_id;
