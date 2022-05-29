@@ -1,12 +1,10 @@
-package com.example.demo.products.entity;
-
-import static javax.persistence.GenerationType.AUTO;
+package com.example.demo.category;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,14 +13,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+class entityClassName {
 
   @Id
-  @GeneratedValue(strategy = AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String name;
-
-  @OneToOne(mappedBy = "category_id")
-  private Product product;
 }

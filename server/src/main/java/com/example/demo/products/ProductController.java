@@ -1,11 +1,9 @@
-package com.example.demo.customers;
+package com.example.demo.products;
 
-import com.example.demo.customers.entity.Customer;
-import com.example.demo.customers.repository.CustomerRepository;
+import com.example.demo.products.entity.Product;
+import com.example.demo.products.repository.ProductRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "customers")
-@RequestMapping("customers")
-public class CustomerController {
+@Tag(name = "products")
+@RequestMapping("product")
+class ProductController {
 
   @Autowired
-  CustomerRepository customerRepository;
+  ProductRepository productRepository;
 
-  @GetMapping("test")
-  public void Test() {}
+  @PutMapping("test")
+  public Product Test(@RequestBody Product item) {
+    System.out.println(item.toString());
+    productRepository.save(item);
+    return item;
+  }
 
   @GetMapping
   public ResponseEntity<?> getAll() {
@@ -40,16 +42,18 @@ public class CustomerController {
   }
 
   @PostMapping
-  public void create(@RequestBody List<Customer> item) {
-    for (Customer i : item) {
-      customerRepository.save(i);
+  public ResponseEntity<?> create(@RequestBody List<Product> item) {
+    for (Product i : item) {
+      productRepository.save(i);
     }
+
+    return null;
   }
 
   @PutMapping("{id}")
   public ResponseEntity<?> update(
     @PathVariable("id") Long id,
-    @RequestBody Customer item
+    @RequestBody Product item
   ) {
     return null;
   }

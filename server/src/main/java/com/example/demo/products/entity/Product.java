@@ -7,12 +7,11 @@ import static javax.persistence.GenerationType.AUTO;
 import com.example.demo.reviews.entity.Review;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,21 +26,21 @@ public class Product {
   @GeneratedValue(strategy = AUTO)
   private Long id;
 
+  @Column(unique = true)
+  private String reference;
+
+  @Column(columnDefinition = "TEXT")
+  private String description;
+
   private Float width;
   private Float height;
+  private String image;
+  private String thumbnail;
 
   private Float price;
   private Integer sales;
   private Integer stock;
-
-  private String reference;
-  private String thumbnail;
-  private String image;
-  private String description;
-
-  @OneToOne
-  @JoinColumn(referencedColumnName = "id", name = "category_id")
-  private Category category_id;
+  private Integer category_id;
 
   @OneToMany(
     mappedBy = "customer",

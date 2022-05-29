@@ -35,10 +35,10 @@ const App = () => {
   return (
     <Admin
       title=""
-      // dataProvider={dataProviderFactory(
-      //   process.env.REACT_APP_DATA_PROVIDER || ""
-      // )}
-      dataProvider={dataProvider}
+      dataProvider={dataProviderFactory(
+        process.env.REACT_APP_DATA_PROVIDER || ""
+      )}
+      // dataProvider={dataProvider}
       authProvider={authProvider}
       dashboard={Dashboard}
       loginPage={Login}

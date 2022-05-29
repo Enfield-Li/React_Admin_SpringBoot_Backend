@@ -10,6 +10,7 @@ import com.example.demo.reviews.entity.Review;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -41,9 +42,23 @@ public class Command {
   private Float total;
   private Boolean returned;
 
+  @OneToOne(mappedBy = "command")
+  private Invoice invoice;
+
+  @Column(updatable = false, insertable = false)
+  private Long customer_id;
+
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "customer_id")
   private Customer customer;
+
+  @OneToMany(
+    mappedBy = "customer",
+    cascade = ALL,
+    orphanRemoval = true,
+    fetch = LAZY
+  )
+  private List<Review> reviews = new ArrayList<>();
 
   @OneToMany
   @JoinTable(
@@ -52,15 +67,4 @@ public class Command {
     inverseJoinColumns = @JoinColumn(name = "basket_id")
   )
   private List<Basket> basket = new ArrayList<>();
-
-  @OneToOne(mappedBy = "command")
-  private Invoice invoice;
-
-  @OneToMany(
-    mappedBy = "customer",
-    cascade = ALL,
-    orphanRemoval = true,
-    fetch = LAZY
-  )
-  private List<Review> reviews;
 }
