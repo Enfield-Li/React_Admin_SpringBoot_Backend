@@ -4,21 +4,23 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
 
+import com.example.demo.reviews.entity.Review;
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import com.example.demo.reviews.entity.Review;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
   @Id
@@ -47,5 +49,5 @@ public class Product {
     orphanRemoval = true,
     fetch = LAZY
   )
-  private List<Review> reviews;
+  private List<Review> reviews = new ArrayList<>();
 }

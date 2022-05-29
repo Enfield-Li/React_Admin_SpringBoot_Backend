@@ -12,11 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Invoice {
 
   @Id
@@ -37,5 +41,6 @@ public class Invoice {
   private Command command;
 
   @ManyToOne(fetch = LAZY)
+  @JoinColumn(name = "customer_id")
   private Customer customer;
 }

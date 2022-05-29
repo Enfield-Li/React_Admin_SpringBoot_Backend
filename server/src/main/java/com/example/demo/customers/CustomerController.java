@@ -1,12 +1,11 @@
 package com.example.demo.customers;
 
+import com.example.demo.customers.entity.Customer;
+import com.example.demo.customers.repository.CustomerRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.example.demo.customers.entity.Customer;
-import com.example.demo.customers.repository.CustomerRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +19,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "customers")
 @RequestMapping("/customers")
-class CustomerController {
+public class CustomerController {
 
   @Autowired
-  CustomerRepository repository;
+  CustomerRepository customerRepository;
+
+  @GetMapping("test")
+  public void Test() {}
 
   @GetMapping
   public ResponseEntity<List<Customer>> getAll() {
     try {
       List<Customer> items = new ArrayList<Customer>();
 
-      repository.findAll().forEach(items::add);
+      customerRepository.findAll().forEach(items::add);
 
       if (items.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
@@ -43,7 +46,7 @@ class CustomerController {
 
   @GetMapping("{id}")
   public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-    Optional<Customer> existingItemOptional = repository.findById(id);
+    Optional<Customer> existingItemOptional = customerRepository.findById(id);
 
     if (existingItemOptional.isPresent()) {
       return new ResponseEntity<>(existingItemOptional.get(), HttpStatus.OK);
@@ -53,12 +56,9 @@ class CustomerController {
   }
 
   @PostMapping
-  public ResponseEntity<?> create(@RequestBody Customer item) {
-    try {
-      Customer savedItem = repository.save(item);
-      return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
-    } catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+  public void create(@RequestBody List<Customer> item) {
+    for (Customer i : item) {
+      customerRepository.save(i);
     }
   }
 
@@ -67,14 +67,17 @@ class CustomerController {
     @PathVariable("id") Long id,
     @RequestBody Customer item
   ) {
-    Optional<Customer> existingItemOptional = repository.findById(id);
+    Optional<Customer> existingItemOptional = customerRepository.findById(id);
     if (existingItemOptional.isPresent()) {
       Customer existingItem = existingItemOptional.get();
       System.out.println(
         "TODO for developer - update logic is unique to entity and must be implemented manually."
       );
       //existingItem.setSomeField(item.getSomeField());
-      return new ResponseEntity<>(repository.save(existingItem), HttpStatus.OK);
+      return new ResponseEntity<>(
+        customerRepository.save(existingItem),
+        HttpStatus.OK
+      );
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -83,7 +86,7 @@ class CustomerController {
   @DeleteMapping("{id}")
   public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
     try {
-      repository.deleteById(id);
+      customerRepository.deleteById(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);

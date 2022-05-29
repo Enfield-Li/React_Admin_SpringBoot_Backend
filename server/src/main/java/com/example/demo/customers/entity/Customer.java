@@ -10,25 +10,37 @@ import com.example.demo.reviews.entity.Review;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
 
   @Id
   @GeneratedValue(strategy = AUTO)
   private Long id;
 
-  private String first_name;
-  private String last_name;
+  @Column(unique = true, nullable = false)
   private String email;
+
+  @Column(nullable = false)
+  private String first_name;
+
+  @Column(nullable = false)
+  private String last_name;
+
   private String address;
   private String zipcode;
   private String city;
@@ -39,13 +51,13 @@ public class Customer {
   private Instant first_seen;
   private Instant last_seen;
   private Instant latest_purchase;
-  private Float total_spent;
 
   private Boolean has_ordered;
   private Boolean has_newsletter;
   private Integer nb_commands;
+  private Float total_spent;
 
-  @OneToMany
+  @ManyToMany
   @JoinTable(
     name = "customer_group",
     joinColumns = @JoinColumn(name = "customer_id"),
@@ -67,7 +79,7 @@ public class Customer {
     orphanRemoval = true,
     fetch = LAZY
   )
-  private List<Invoice> invoices;
+  private List<Invoice> invoices = new ArrayList<>();
 
   @OneToMany(
     mappedBy = "customer",
@@ -75,5 +87,5 @@ public class Customer {
     orphanRemoval = true,
     fetch = LAZY
   )
-  private List<Review> reviews;
+  private List<Review> reviews = new ArrayList<>();
 }
