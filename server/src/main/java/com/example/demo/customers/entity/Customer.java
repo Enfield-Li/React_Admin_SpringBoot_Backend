@@ -1,12 +1,7 @@
 package com.example.demo.customers.entity;
 
-import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
 
-import com.example.demo.commands.entity.Command;
-import com.example.demo.invoices.entity.Invoice;
-import com.example.demo.reviews.entity.Review;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -64,28 +58,4 @@ public class Customer {
     inverseJoinColumns = @JoinColumn(name = "group_type_name")
   )
   private List<Group> groups = new ArrayList<>();
-
-  @OneToMany(
-    mappedBy = "customer",
-    cascade = ALL,
-    orphanRemoval = true,
-    fetch = LAZY
-  )
-  private List<Command> commands = new ArrayList<>();
-
-  @OneToMany(
-    mappedBy = "customer",
-    cascade = ALL,
-    orphanRemoval = true,
-    fetch = LAZY
-  )
-  private List<Invoice> invoices = new ArrayList<>();
-
-  @OneToMany(
-    mappedBy = "customer",
-    cascade = ALL,
-    orphanRemoval = true,
-    fetch = LAZY
-  )
-  private List<Review> reviews = new ArrayList<>();
 }
