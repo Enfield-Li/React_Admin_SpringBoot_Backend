@@ -1,4 +1,4 @@
-package com.example.demo.commands;
+package com.example.demo.commands.entity;
 
 import com.example.demo.products.entity.Product;
 import javax.persistence.Entity;

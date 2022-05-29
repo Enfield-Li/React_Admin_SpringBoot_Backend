@@ -1,12 +1,12 @@
-package com.example.demo.commands;
+package com.example.demo.commands.entity;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
 
 import com.example.demo.customers.entity.Customer;
-import com.example.demo.invoices.Invoice;
-import com.example.demo.reviews.Review;
+import com.example.demo.invoices.entity.Invoice;
+import com.example.demo.reviews.entity.Review;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,7 @@ public class Command {
   @CreationTimestamp
   private Instant date;
 
+  private String status;
   private String reference;
   private Float total_ex_taxes;
   private Float delivery_fees;
@@ -39,10 +40,6 @@ public class Command {
   private Float taxes;
   private Float total;
   private Boolean returned;
-
-  @OneToOne
-  @JoinColumn(referencedColumnName = "status", name = "status")
-  private DeliveryStats status;
 
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "customer_id")

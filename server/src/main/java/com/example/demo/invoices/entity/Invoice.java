@@ -1,14 +1,13 @@
-package com.example.demo.invoices;
+package com.example.demo.invoices.entity;
 
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
 
-import com.example.demo.commands.Command;
+import com.example.demo.commands.entity.Command;
 import com.example.demo.customers.entity.Customer;
 import java.time.Instant;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

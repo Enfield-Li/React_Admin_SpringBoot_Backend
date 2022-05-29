@@ -1,6 +1,6 @@
-package com.example.demo.reviews;
+package com.example.demo.reviews.entity;
 
-import com.example.demo.commands.Command;
+import com.example.demo.commands.entity.Command;
 import com.example.demo.customers.entity.Customer;
 import com.example.demo.products.entity.Product;
 import java.time.Instant;
@@ -25,6 +25,7 @@ public class Review {
   @CreationTimestamp
   private Instant date;
 
+  private String status;
   private Integer rating;
   private String comment;
 
@@ -39,8 +40,4 @@ public class Review {
   @ManyToOne
   @JoinColumn(name = "command_id")
   private Command command;
-
-  @OneToOne
-  @JoinColumn(referencedColumnName = "status", name = "status")
-  private ReviewStats status;
 }

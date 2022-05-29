@@ -4,10 +4,10 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
 
-import com.example.demo.commands.Command;
-import com.example.demo.invoices.Invoice;
-import com.example.demo.reviews.Review;
-
+import com.example.demo.commands.entity.Command;
+import com.example.demo.invoices.entity.Invoice;
+import com.example.demo.reviews.entity.Review;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -32,13 +32,13 @@ public class Customer {
   private String address;
   private String zipcode;
   private String city;
-  private String birthday;
 
   private String avatar;
   private String stateAbbr;
-  private String first_seen;
-  private String last_seen;
-  private String latest_purchase;
+  private Instant birthday;
+  private Instant first_seen;
+  private Instant last_seen;
+  private Instant latest_purchase;
   private Float total_spent;
 
   private Boolean has_ordered;
