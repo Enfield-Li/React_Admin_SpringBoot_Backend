@@ -47,18 +47,28 @@ class ProductController {
     @RequestParam(name = "_start", required = false) Integer start,
     @RequestParam(name = "_end", required = false) Integer end,
     @RequestParam(name = "_sort", required = false) String sort,
-    @RequestParam(name = "_order", required = false) String order
+    @RequestParam(name = "_order", required = false) String order,
+    @RequestParam(name = "category_id", required = false) Long category_id,
+    @RequestParam(name = "sales_gt", required = false) Integer sales_gt,
+    @RequestParam(name = "sales_lte", required = false) Integer sales_lte,
+    @RequestParam(name = "stock_gt", required = false) Integer stock_gt,
+    @RequestParam(name = "stock_lt", required = false) Integer stock_lt
   ) {
     Integer take = end - start;
-    
+
     List<Product> products = prouctMapper.getPaginatedProducts(
       start,
       take,
       sort,
       order
     );
-    System.out.println(products.size());
-    return ResponseEntity.ok().header("X-Total-Count", "129").body(products);
+
+    String productCount = prouctMapper.getProductCount();
+
+    return ResponseEntity
+      .ok()
+      .header("X-Total-Count", productCount)
+      .body(products);
   }
 
   @GetMapping("{id}")

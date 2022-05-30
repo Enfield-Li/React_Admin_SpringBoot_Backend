@@ -18,4 +18,7 @@ public interface ProductMapper {
     @Param("sort") String sort,
     @Param("order") String order
   );
+
+  @Select("SELECT count(*) AS count from product")
+  public String getProductCount();
 }

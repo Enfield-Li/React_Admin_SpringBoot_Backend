@@ -46,12 +46,15 @@ class ReviewController {
       start,
       take,
       sort,
-      order
+      order,
+      productId
     );
+
+    String reviewCount = reviewMapper.getReviewCount(productId);
 
     return ResponseEntity
       .ok()
-      .header("X-Total-Count", "10")
+      .header("X-Total-Count", reviewCount)
       .body(reviewsForProduct);
   }
 

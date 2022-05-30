@@ -9,13 +9,17 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface ReviewMapper {
   @Select(
-    "SELECT * FROM review ORDER BY #{sort} #{order}" +
+    "SELECT * FROM review WHERE product_id = #{productId} ORDER BY #{sort} #{order}" +
     " LIMIT #{take} OFFSET #{start}"
   )
   public List<Review> getPaginatedReviews(
     @Param("start") Integer start,
     @Param("take") Integer take,
     @Param("sort") String sort,
-    @Param("order") String order
+    @Param("order") String order,
+    @Param("productId") Long productId
   );
+
+  @Select("SELECT count(*) AS count from review WHERE product_id = #{productId}")
+  public String getReviewCount(@Param("productId") Long productId);
 }
