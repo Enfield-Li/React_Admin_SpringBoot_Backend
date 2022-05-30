@@ -1,9 +1,12 @@
 package com.example.demo.reviews.entity;
 
+import static javax.persistence.GenerationType.AUTO;
+
 import java.time.Instant;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,15 +20,16 @@ import org.hibernate.annotations.CreationTimestamp;
 public class Review {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = AUTO)
   private Long id;
 
   @CreationTimestamp
   private Instant date;
 
+  @Column(columnDefinition = "TEXT")
+  private String comment;
   private String status;
   private Integer rating;
-  private String comment;
 
   private Long customer_id;
   private Long product_id;

@@ -1,5 +1,7 @@
 package com.example.demo.commands.entity;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
 
 import java.time.Instant;
@@ -8,8 +10,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,11 +35,12 @@ public class Command {
   private Boolean returned;
   private Long customer_id;
 
-  @OneToMany
-  @JoinTable(
-    name = "command_basket",
-    joinColumns = @JoinColumn(name = "command_id"),
-    inverseJoinColumns = @JoinColumn(name = "basket_id")
+  @OneToMany(
+    mappedBy = "command",
+    cascade = ALL,
+    orphanRemoval = true,
+    targetEntity = Basket.class,
+    fetch = LAZY
   )
   private List<Basket> basket = new ArrayList<>();
 }

@@ -5,7 +5,6 @@ import com.example.demo.customers.repository.CustomerRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,9 +40,7 @@ public class CustomerController {
 
   @PostMapping
   public void create(@RequestBody List<Customer> item) {
-    for (Customer i : item) {
-      customerRepository.save(i);
-    }
+    customerRepository.saveAll(item);
   }
 
   @PutMapping("{id}")
