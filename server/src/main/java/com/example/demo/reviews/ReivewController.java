@@ -1,7 +1,9 @@
 package com.example.demo.reviews;
 
 import com.example.demo.reviews.entity.Review;
+import com.example.demo.reviews.repository.ReviewMapper;
 import com.example.demo.reviews.repository.ReviewRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,24 +15,44 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @Tag(name = "Review")
-@RequestMapping("/review")
+@RequestMapping("/reviews")
 class ReviewController {
 
   @Autowired
   ReviewRepository repository;
 
+  @Autowired
+  ReviewMapper reviewMapper;
+
   @GetMapping("test")
   public void Test() {}
 
   @GetMapping
-  public ResponseEntity<List<Review>> getAll() {
-    return null;
+  public ResponseEntity<List<Review>> getReviewForProduct(
+    @RequestParam(name = "_start", required = false) String start,
+    @RequestParam(name = "_end", required = false) Integer end,
+    @RequestParam(name = "_sort", required = false) String sort,
+    @RequestParam(name = "_order", required = false) String order,
+    @RequestParam(name = "product_id", required = false) Long productId
+  ) {
+    // System.out.println(productId);
+    // List<Review> reviewsForProduct = repository.findByproduct_id(productId);
+    // System.out.println(reviewsForProduct.size());
+    // return null;
+
+    List<Review> reviewsForProduct = reviewMapper.getUserPostWithInteractions(
+      productId
+    );
+
+    return ResponseEntity
+      .ok()
+      .header("X-Total-Count", "10")
+      .body(reviewsForProduct);
   }
 
   @GetMapping("{id}")

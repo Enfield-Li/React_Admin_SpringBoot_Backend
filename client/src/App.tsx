@@ -30,17 +30,15 @@ const i18nProvider = polyglotI18nProvider((locale) => {
   return englishMessages;
 }, "en");
 
-const dataP2 = simpleRestProvider("http://localhost:3060");
-// const dataP2 = jsonServerProvider("http://localhost:3060");
+// const data = dataProviderFactory(process.env.REACT_APP_DATA_PROVIDER || "");
+const data = simpleRestProvider("http://localhost:3060");
+// const data = jsonServerProvider("http://localhost:3060");
 
 const App = () => {
   return (
     <Admin
       title=""
-      // dataProvider={dataProviderFactory(
-      //   process.env.REACT_APP_DATA_PROVIDER || ""
-      // )}
-      dataProvider={dataP2}
+      dataProvider={data}
       authProvider={authProvider}
       dashboard={Dashboard}
       loginPage={Login}

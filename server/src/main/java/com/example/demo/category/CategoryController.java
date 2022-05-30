@@ -1,6 +1,5 @@
 package com.example.demo.category;
 
-import com.example.demo.params.Sort;
 import java.lang.reflect.Array;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,11 @@ class CategoryController {
   CategoryRepository repository;
 
   @GetMapping
-  public ResponseEntity<Category> getAll(
-    @RequestParam(name = "_end", required = false) Integer end,
+  public ResponseEntity<?> getAll(
     @RequestParam(name = "_start", required = false) String start,
-    @RequestParam(name = "_order", required = false) String order,
-    @RequestParam(name = "_sort", required = false) String sort
+    @RequestParam(name = "_end", required = false) Integer end,
+    @RequestParam(name = "_sort", required = false) String sort,
+    @RequestParam(name = "_order", required = false) String order
   ) {
     // System.out.println("category start");
     // System.out.println(_end);
@@ -35,8 +34,10 @@ class CategoryController {
     // System.out.println(_order);
     // System.out.println(_sort);
     // System.out.println("category end");
+    // return null;
 
-    return null;
+    List<Category> categories = repository.findAll();
+    return ResponseEntity.ok().header("X-Total-Count", "13").body(categories);
   }
 
   @PutMapping("{id}")
