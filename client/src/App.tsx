@@ -18,7 +18,8 @@ import reviews from "./reviews";
 import dataProviderFactory from "./dataProvider";
 import Configuration from "./configuration/Configuration";
 import Segments from "./segments/Segments";
-import simpleRestProvider from "ra-data-json-server";
+import simpleRestProvider from "ra-data-json-server"; 
+import jsonServerProvider from "ra-data-json-server";
 
 const i18nProvider = polyglotI18nProvider((locale) => {
   if (locale === "fr") {
@@ -29,16 +30,18 @@ const i18nProvider = polyglotI18nProvider((locale) => {
   return englishMessages;
 }, "en");
 
-const dataProvider = simpleRestProvider("http://localhost:3060");
+const dataP2 = simpleRestProvider("http://localhost:3060");
+const dataProvider = jsonServerProvider("http://localhost:3060");
 
 const App = () => {
   return (
     <Admin
       title=""
-      dataProvider={dataProviderFactory(
-        process.env.REACT_APP_DATA_PROVIDER || ""
-      )}
+      // dataProvider={dataProviderFactory(
+      //   process.env.REACT_APP_DATA_PROVIDER || ""
+      // )}
       // dataProvider={dataProvider}
+      dataProvider={dataP2}
       authProvider={authProvider}
       dashboard={Dashboard}
       loginPage={Login}

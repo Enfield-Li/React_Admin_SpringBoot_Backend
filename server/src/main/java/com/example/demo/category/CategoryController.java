@@ -1,8 +1,7 @@
-package com.example.demo.products;
+package com.example.demo.category;
 
-import com.example.demo.products.entity.Product;
-import com.example.demo.products.repository.ProductRepository;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.example.demo.params.Sort;
+import java.lang.reflect.Array;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,45 +16,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "products")
-@RequestMapping("products")
-class ProductController {
+@RequestMapping("/categories")
+class CategoryController {
 
   @Autowired
-  ProductRepository productRepository;
-
-  @PutMapping("test")
-  public void Test() {}
+  CategoryRepository repository;
 
   @GetMapping
-  public ResponseEntity<?> getAll(
+  public ResponseEntity<Category> getAll(
     @RequestParam(name = "_end", required = false) Integer end,
     @RequestParam(name = "_start", required = false) String start,
     @RequestParam(name = "_order", required = false) Object order,
     @RequestParam(name = "_sort", required = false) Object sort
   ) {
-    System.out.println("end: " + end);
-    System.out.println("start: " + start);
-    System.out.println("order: " + order);
-    System.out.println("sort: " + sort);
-    return null;
-  }
+    // System.out.println("category start");
+    // System.out.println(_end);
+    // System.out.println(_start);
+    // System.out.println(_order);
+    // System.out.println(_sort);
+    // System.out.println("category end");
 
-  @GetMapping("{id}")
-  public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-    return null;
-  }
-
-  @PostMapping
-  public ResponseEntity<?> create(@RequestBody List<Product> item) {
-    productRepository.saveAll(item);
     return null;
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<?> update(
+  public ResponseEntity<Category> update(
     @PathVariable("id") Long id,
-    @RequestBody Product item
+    @RequestBody Category item
   ) {
     return null;
   }
