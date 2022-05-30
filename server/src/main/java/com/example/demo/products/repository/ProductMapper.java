@@ -8,6 +8,14 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface ProductMapper {
-  @Select("SELECT * FROM product LIMIT #{end}")
-  public List<Product> getPaginatedProducts(@Param("end") Integer end);
+  @Select(
+    "SELECT * FROM product ORDER BY #{sort} #{order}" +
+    " LIMIT #{take} OFFSET #{start}"
+  )
+  public List<Product> getPaginatedProducts(
+    @Param("start") Integer start,
+    @Param("take") Integer take,
+    @Param("sort") String sort,
+    @Param("order") String order
+  );
 }

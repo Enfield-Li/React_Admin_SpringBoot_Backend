@@ -34,19 +34,19 @@ class ReviewController {
 
   @GetMapping
   public ResponseEntity<List<Review>> getReviewForProduct(
-    @RequestParam(name = "_start", required = false) String start,
+    @RequestParam(name = "_start", required = false) Integer start,
     @RequestParam(name = "_end", required = false) Integer end,
     @RequestParam(name = "_sort", required = false) String sort,
     @RequestParam(name = "_order", required = false) String order,
     @RequestParam(name = "product_id", required = false) Long productId
   ) {
-    // System.out.println(productId);
-    // List<Review> reviewsForProduct = repository.findByproduct_id(productId);
-    // System.out.println(reviewsForProduct.size());
-    // return null;
+    Integer take = end - start;
 
-    List<Review> reviewsForProduct = reviewMapper.getUserPostWithInteractions(
-      productId
+    List<Review> reviewsForProduct = reviewMapper.getPaginatedReviews(
+      start,
+      take,
+      sort,
+      order
     );
 
     return ResponseEntity

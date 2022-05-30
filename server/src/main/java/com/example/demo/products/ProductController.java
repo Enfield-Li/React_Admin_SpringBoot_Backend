@@ -49,7 +49,15 @@ class ProductController {
     @RequestParam(name = "_sort", required = false) String sort,
     @RequestParam(name = "_order", required = false) String order
   ) {
-    List<Product> products = prouctMapper.getPaginatedProducts(end);
+    Integer take = end - start;
+    
+    List<Product> products = prouctMapper.getPaginatedProducts(
+      start,
+      take,
+      sort,
+      order
+    );
+    System.out.println(products.size());
     return ResponseEntity.ok().header("X-Total-Count", "129").body(products);
   }
 
