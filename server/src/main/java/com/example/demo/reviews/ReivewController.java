@@ -4,6 +4,8 @@ import com.example.demo.reviews.entity.Review;
 import com.example.demo.reviews.repository.ReviewMapper;
 import com.example.demo.reviews.repository.ReviewRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +34,7 @@ class ReviewController {
   @GetMapping("test")
   public void Test() {}
 
-  @GetMapping
+  @GetMapping(params = { "_start", "_end", "_sort", "_order", "product_id" })
   public ResponseEntity<List<Review>> getReviewForProduct(
     @RequestParam(name = "_start", required = false) Integer start,
     @RequestParam(name = "_end", required = false) Integer end,
@@ -50,7 +52,32 @@ class ReviewController {
       productId
     );
 
-    String reviewCount = reviewMapper.getReviewCount(productId);
+    String reviewCount = reviewMapper.getProductReviewCount(productId);
+
+    return ResponseEntity
+      .ok()
+      .header("X-Total-Count", reviewCount)
+      .body(reviewsForProduct);
+  }
+
+  @GetMapping(params = { "_start", "_end", "_sort", "_order" })
+  public ResponseEntity<List<Review>> getAllReviews(
+    @RequestParam(name = "_start", required = false) Integer start,
+    @RequestParam(name = "_end", required = false) Integer end,
+    @RequestParam(name = "_sort", required = false) String sort,
+    @RequestParam(name = "_order", required = false) String order
+  ) {
+    Integer take = end - start;
+
+    // List<Review> reviewsForProduct = reviewMapper.getPaginatedReviews(
+    //   start,
+    //   take,
+    //   sort,
+    //   order
+    // );
+    List<Review> reviewsForProduct = new ArrayList<>();
+
+    String reviewCount = reviewMapper.getReviewCount();
 
     return ResponseEntity
       .ok()
