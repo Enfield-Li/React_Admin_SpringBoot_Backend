@@ -26,8 +26,8 @@ class CategoryController {
   public ResponseEntity<Category> getAll(
     @RequestParam(name = "_end", required = false) Integer end,
     @RequestParam(name = "_start", required = false) String start,
-    @RequestParam(name = "_order", required = false) Object order,
-    @RequestParam(name = "_sort", required = false) Object sort
+    @RequestParam(name = "_order", required = false) String order,
+    @RequestParam(name = "_sort", required = false) String sort
   ) {
     // System.out.println("category start");
     // System.out.println(_end);

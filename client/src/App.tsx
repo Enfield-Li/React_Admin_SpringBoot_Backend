@@ -31,7 +31,7 @@ const i18nProvider = polyglotI18nProvider((locale) => {
 }, "en");
 
 const dataP2 = simpleRestProvider("http://localhost:3060");
-const dataProvider = jsonServerProvider("http://localhost:3060");
+// const dataP2 = jsonServerProvider("http://localhost:3060");
 
 const App = () => {
   return (
@@ -40,7 +40,6 @@ const App = () => {
       // dataProvider={dataProviderFactory(
       //   process.env.REACT_APP_DATA_PROVIDER || ""
       // )}
-      // dataProvider={dataProvider}
       dataProvider={dataP2}
       authProvider={authProvider}
       dashboard={Dashboard}

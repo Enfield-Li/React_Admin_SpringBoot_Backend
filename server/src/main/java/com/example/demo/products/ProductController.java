@@ -5,6 +5,7 @@ import com.example.demo.products.repository.ProductRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,14 +33,16 @@ class ProductController {
   public ResponseEntity<?> getAll(
     @RequestParam(name = "_end", required = false) Integer end,
     @RequestParam(name = "_start", required = false) String start,
-    @RequestParam(name = "_order", required = false) Object order,
-    @RequestParam(name = "_sort", required = false) Object sort
+    @RequestParam(name = "_order", required = false) String order,
+    @RequestParam(name = "_sort", required = false) String sort
   ) {
-    System.out.println("end: " + end);
-    System.out.println("start: " + start);
-    System.out.println("order: " + order);
-    System.out.println("sort: " + sort);
-    return null;
+    List<Product> products = productRepository.findAll();
+
+    HttpHeaders header = new HttpHeaders();
+    header.add("X-Total-Count", "129");
+
+    // return ResponseEntity.ok().header("X-Total-Count", "129").body(products);
+    return ResponseEntity.ok().headers(header).body(products);
   }
 
   @GetMapping("{id}")
