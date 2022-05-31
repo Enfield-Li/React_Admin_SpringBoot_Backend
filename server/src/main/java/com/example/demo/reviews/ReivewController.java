@@ -52,7 +52,7 @@ class ReviewController {
       productId
     );
 
-    String reviewCount = reviewMapper.getProductReviewCount(productId);
+    String reviewCount = reviewMapper.getReviewCount(productId);
 
     return ResponseEntity
       .ok()
@@ -69,15 +69,15 @@ class ReviewController {
   ) {
     Integer take = end - start;
 
-    // List<Review> reviewsForProduct = reviewMapper.getPaginatedReviews(
-    //   start,
-    //   take,
-    //   sort,
-    //   order
-    // );
-    List<Review> reviewsForProduct = new ArrayList<>();
+    List<Review> reviewsForProduct = reviewMapper.getPaginatedReviews(
+      start,
+      take,
+      sort,
+      order,
+      null
+    );
 
-    String reviewCount = reviewMapper.getReviewCount();
+    String reviewCount = reviewMapper.getReviewCount(null);
 
     return ResponseEntity
       .ok()

@@ -8,17 +8,24 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface ProductMapper {
-  @Select(
-    "SELECT * FROM product ORDER BY #{sort} #{order}" +
-    " LIMIT #{take} OFFSET #{start}"
-  )
   public List<Product> getPaginatedProducts(
     @Param("start") Integer start,
     @Param("take") Integer take,
     @Param("sort") String sort,
-    @Param("order") String order
+    @Param("order") String order,
+    @Param("category_id") Long category_id,
+    @Param("sales_gt") Integer sales_gt,
+    @Param("sales_lte") Integer sales_lte,
+    @Param("stock_gt") Integer stock_gt,
+    @Param("stock_lt") Integer stock_lt
   );
 
-  @Select("SELECT count(*) AS count from product")
-  public String getProductCount();
+  // @Select("SELECT count(*) AS count from product")
+  public String getProductCount(
+    @Param("category_id") Long category_id,
+    @Param("sales_gt") Integer sales_gt,
+    @Param("sales_lte") Integer sales_lte,
+    @Param("stock_gt") Integer stock_gt,
+    @Param("stock_lt") Integer stock_lt
+  );
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,6 +32,15 @@ public class CustomerController {
   @GetMapping
   public ResponseEntity<?> getAll() {
     return null;
+  }
+
+  @GetMapping(params = "id")
+  public ResponseEntity<List<Customer>> getManyReference(
+    @RequestParam("id") List<Long> id
+  ) {
+    System.out.println("customer size: " + id.size());
+
+    return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
   }
 
   @GetMapping("{id}")

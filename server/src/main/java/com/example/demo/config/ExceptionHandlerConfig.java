@@ -26,7 +26,7 @@ public class ExceptionHandlerConfig extends RuntimeException {
 
   @ExceptionHandler(value = { NoSuchElementException.class })
   protected ResponseEntity<String> catchItemNotExist(NoSuchElementException e) {
-    log.error("Item not found: ", e);
+    log.error("*********************Item not found*********************: ", e);
 
     return ResponseEntity
       .status(HttpStatus.NOT_FOUND)

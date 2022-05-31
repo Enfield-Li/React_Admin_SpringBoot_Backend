@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.reviews.repository.ReviewMapper">
+    <select id="getPaginatedReviews" resultType="Review">
+        SELECT * FROM review
+        <where>
+            <if test="productId != null">product_id = #{productId}</if>
+        </where>
+        ORDER BY #{sort} #{order}
+        LIMIT #{take} 
+        OFFSET #{start}
+    </select>
+
+    <select id="getReviewCount" resultType="String">
+        SELECT count(*) AS count from review
+        <where>
+            <if test="productId != null">product_id = #{productId}</if>
+        </where>
+    </select>
+
+</mapper>

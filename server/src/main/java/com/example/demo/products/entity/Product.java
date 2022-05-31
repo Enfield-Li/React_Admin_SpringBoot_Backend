@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@AllArgsConstructor
 public class Product {
 
   @Id

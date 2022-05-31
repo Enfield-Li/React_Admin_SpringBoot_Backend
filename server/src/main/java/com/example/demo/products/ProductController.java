@@ -24,14 +24,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "products")
 @RequestMapping("products")
-@CrossOrigin(origins = "http://localhost:3000")
+// @CrossOrigin(origins = "http://localhost:3000")
 class ProductController {
 
-  @Autowired
   ProductRepository productRepository;
+  ProductMapper productMapper;
 
   @Autowired
-  ProductMapper prouctMapper;
+  ProductController(
+    ProductRepository productRepository,
+    ProductMapper prouctMapper
+  ) {
+    this.productRepository = productRepository;
+    this.productMapper = prouctMapper;
+  }
 
   @PutMapping("test")
   public void Test() {}
@@ -42,8 +48,15 @@ class ProductController {
     return null;
   }
 
-  @GetMapping
-  public ResponseEntity<?> getAll(
+  /* 
+    URL example: 
+    http://localhost:3060/products?_end=24&_order=ASC&_sort=stock&_start=0
+    http://localhost:3060/products?_end=24&_order=ASC&_sort=stock&_start=0&sales_gt=10&sales_lte=25
+    http://localhost:3060/products?_end=24&_order=ASC&_sort=stock&_start=0&sales_gt=10&sales_lte=25&stock_gt=0&stock_lt=10
+    http://localhost:3060/products?_end=24&_order=ASC&_sort=stock&_start=0&category_id=2&sales_gt=10&sales_lte=25&stock_gt=0&stock_lt=10
+  */
+  @GetMapping(params = { "_start", "_end", "_sort", "_order" })
+  public ResponseEntity<List<Product>> getAll(
     @RequestParam(name = "_start", required = false) Integer start,
     @RequestParam(name = "_end", required = false) Integer end,
     @RequestParam(name = "_sort", required = false) String sort,
@@ -56,14 +69,25 @@ class ProductController {
   ) {
     Integer take = end - start;
 
-    List<Product> products = prouctMapper.getPaginatedProducts(
+    List<Product> products = productMapper.getPaginatedProducts(
       start,
       take,
       sort,
-      order
+      order,
+      category_id,
+      sales_gt,
+      sales_lte,
+      stock_gt,
+      stock_lt
     );
 
-    String productCount = prouctMapper.getProductCount();
+    String productCount = productMapper.getProductCount(
+      category_id,
+      sales_gt,
+      sales_lte,
+      stock_gt,
+      stock_lt
+    );
 
     return ResponseEntity
       .ok()
@@ -71,8 +95,17 @@ class ProductController {
       .body(products);
   }
 
+  @GetMapping(params = "id")
+  public ResponseEntity<List<Product>> getManyReference(
+    @RequestParam("id") List<Long> id
+  ) {
+    System.out.println("product size: " + id.size());
+
+    return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
+  }
+
   @GetMapping("{id}")
-  public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+  public ResponseEntity<Product> getById(@PathVariable("id") Long id) {
     Product product = productRepository
       .findById(id)
       .orElseThrow(NoSuchElementException::new);
@@ -81,14 +114,14 @@ class ProductController {
   }
 
   @PostMapping
-  public ResponseEntity<?> create(@RequestBody Product item) {
+  public ResponseEntity<Product> create(@RequestBody Product item) {
     Product createdProduct = productRepository.save(item);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
   }
 
   @Transactional
   @PutMapping("{id}")
-  public ResponseEntity<?> update(
+  public ResponseEntity<Product> update(
     @PathVariable("id") Long id,
     @RequestBody Product item
   ) {
