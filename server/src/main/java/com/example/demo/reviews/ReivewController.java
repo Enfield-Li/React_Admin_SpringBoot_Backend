@@ -36,10 +36,10 @@ class ReviewController {
 
   @GetMapping(params = { "_start", "_end", "_sort", "_order", "product_id" })
   public ResponseEntity<List<Review>> getReviewForProduct(
-    @RequestParam(name = "_start", required = false) Integer start,
-    @RequestParam(name = "_end", required = false) Integer end,
-    @RequestParam(name = "_sort", required = false) String sort,
-    @RequestParam(name = "_order", required = false) String order,
+    @RequestParam(name = "_start") Integer start,
+    @RequestParam(name = "_end") Integer end,
+    @RequestParam(name = "_sort") String sort,
+    @RequestParam(name = "_order") String order,
     @RequestParam(name = "product_id", required = false) Long productId
   ) {
     Integer take = end - start;
@@ -62,14 +62,14 @@ class ReviewController {
 
   @GetMapping(params = { "_start", "_end", "_sort", "_order" })
   public ResponseEntity<List<Review>> getAllReviews(
-    @RequestParam(name = "_start", required = false) Integer start,
-    @RequestParam(name = "_end", required = false) Integer end,
-    @RequestParam(name = "_sort", required = false) String sort,
-    @RequestParam(name = "_order", required = false) String order
+    @RequestParam(name = "_start") Integer start,
+    @RequestParam(name = "_end") Integer end,
+    @RequestParam(name = "_sort") String sort,
+    @RequestParam(name = "_order") String order
   ) {
     Integer take = end - start;
 
-    List<Review> reviewsForProduct = reviewMapper.getPaginatedReviews(
+    List<Review> allReviews = reviewMapper.getPaginatedReviews(
       start,
       take,
       sort,
@@ -82,7 +82,7 @@ class ReviewController {
     return ResponseEntity
       .ok()
       .header("X-Total-Count", reviewCount)
-      .body(reviewsForProduct);
+      .body(allReviews);
   }
 
   @GetMapping("{id}")

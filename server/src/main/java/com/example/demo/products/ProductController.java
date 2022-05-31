@@ -57,10 +57,10 @@ class ProductController {
   */
   @GetMapping(params = { "_start", "_end", "_sort", "_order" })
   public ResponseEntity<List<Product>> getAll(
-    @RequestParam(name = "_start", required = false) Integer start,
-    @RequestParam(name = "_end", required = false) Integer end,
-    @RequestParam(name = "_sort", required = false) String sort,
-    @RequestParam(name = "_order", required = false) String order,
+    @RequestParam(name = "_start") Integer start,
+    @RequestParam(name = "_end") Integer end,
+    @RequestParam(name = "_sort") String sort,
+    @RequestParam(name = "_order") String order,
     @RequestParam(name = "category_id", required = false) Long category_id,
     @RequestParam(name = "sales_gt", required = false) Integer sales_gt,
     @RequestParam(name = "sales_lte", required = false) Integer sales_lte,
@@ -69,7 +69,7 @@ class ProductController {
   ) {
     Integer take = end - start;
 
-    List<Product> products = productMapper.getPaginatedProducts(
+    List<Product> paginatedProducts = productMapper.getPaginatedProducts(
       start,
       take,
       sort,
@@ -92,7 +92,7 @@ class ProductController {
     return ResponseEntity
       .ok()
       .header("X-Total-Count", productCount)
-      .body(products);
+      .body(paginatedProducts);
   }
 
   @GetMapping(params = "id")

@@ -4,7 +4,6 @@ import com.example.demo.products.entity.Product;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface ProductMapper {
@@ -20,7 +19,6 @@ public interface ProductMapper {
     @Param("stock_lt") Integer stock_lt
   );
 
-  // @Select("SELECT count(*) AS count from product")
   public String getProductCount(
     @Param("category_id") Long category_id,
     @Param("sales_gt") Integer sales_gt,
