@@ -1,9 +1,8 @@
 package com.example.demo.reviews.entity;
 
-import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.time.Instant;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 public class Review {
 
   @Id
-  @GeneratedValue(strategy = AUTO)
+  @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
   @CreationTimestamp
@@ -28,6 +27,7 @@ public class Review {
 
   @Column(columnDefinition = "TEXT")
   private String comment;
+
   private String status;
   private Integer rating;
 

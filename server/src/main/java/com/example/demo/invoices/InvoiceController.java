@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "Invoice")
-@RequestMapping("/invoice")
+@Tag(name = "Invoices")
+@RequestMapping("/invoices")
 class InvoiceController {
 
   @Autowired
@@ -29,9 +30,22 @@ class InvoiceController {
   @GetMapping("test")
   public void Test() {}
 
-  @GetMapping
-  public ResponseEntity<List<Invoice>> getAll() {
-    return null;
+  /*
+   * http://localhost:3060/invoices?_end=25&_order=desc&_sort=date&_start=0
+   */
+  @GetMapping(params = { "_start", "_end", "_sort", "_order" })
+  public ResponseEntity<List<Invoice>> getAll(
+    @RequestParam(name = "_start") Integer start,
+    @RequestParam(name = "_end") Integer end,
+    @RequestParam(name = "_sort") String sort,
+    @RequestParam(name = "_order") String order
+  ) {
+    List<Invoice> invoices = repository.findAll();
+
+    return ResponseEntity
+      .ok()
+      .header("X-Total-Count", invoices.size() + "")
+      .body(invoices);
   }
 
   @GetMapping("{id}")

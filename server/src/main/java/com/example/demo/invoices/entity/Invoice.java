@@ -1,6 +1,6 @@
 package com.example.demo.invoices.entity;
 
-import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.time.Instant;
 import javax.persistence.Entity;
@@ -18,7 +18,7 @@ import org.hibernate.annotations.CreationTimestamp;
 public class Invoice {
 
   @Id
-  @GeneratedValue(strategy = AUTO)
+  @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
   @CreationTimestamp

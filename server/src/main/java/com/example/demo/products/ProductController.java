@@ -97,11 +97,11 @@ class ProductController {
 
   @GetMapping(params = "id")
   public ResponseEntity<List<Product>> getManyReference(
-    @RequestParam("id") List<Long> id
+    @RequestParam("id") List<Long> ids
   ) {
-    System.out.println("product size: " + id.size());
+    List<Product> products = productMapper.getManyProducts(ids);
 
-    return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
+    return ResponseEntity.ok().body(products);
   }
 
   @GetMapping("{id}")

@@ -26,4 +26,6 @@ public interface ProductMapper {
     @Param("stock_gt") Integer stock_gt,
     @Param("stock_lt") Integer stock_lt
   );
+
+  public List<Product> getManyProducts(List<Long> ids);
 }

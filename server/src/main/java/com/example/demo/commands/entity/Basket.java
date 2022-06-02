@@ -1,7 +1,7 @@
 package com.example.demo.commands.entity;
 
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,7 @@ import lombok.Data;
 public class Basket {
 
   @Id
-  @GeneratedValue(strategy = AUTO)
+  @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
   private Integer quantity;

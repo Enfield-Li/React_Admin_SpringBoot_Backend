@@ -25,4 +25,13 @@
             <if test="stock_lt != null"> AND stock <![CDATA[ < ]]> #{stock_lt} </if>
         </where>
     </select>
+
+    <select id="getManyProducts" resultType="com.example.demo.products.entity.Product">
+        SELECT *
+        FROM product
+        WHERE id IN
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+    </select>
 </mapper>

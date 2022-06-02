@@ -2,7 +2,7 @@ package com.example.demo.commands.entity;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 public class Command {
 
   @Id
-  @GeneratedValue(strategy = AUTO)
+  @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
   @CreationTimestamp
