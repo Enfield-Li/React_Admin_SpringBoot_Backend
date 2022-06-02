@@ -24,11 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "products")
 @RequestMapping("products")
-// @CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 class ProductController {
 
-  ProductRepository productRepository;
-  ProductMapper productMapper;
+  private final ProductRepository productRepository;
+  private final ProductMapper productMapper;
 
   @Autowired
   ProductController(
@@ -100,7 +100,6 @@ class ProductController {
     @RequestParam("id") List<Long> ids
   ) {
     List<Product> products = productMapper.getManyProducts(ids);
-
     return ResponseEntity.ok().body(products);
   }
 
@@ -116,7 +115,7 @@ class ProductController {
   @PostMapping
   public ResponseEntity<Product> create(@RequestBody Product item) {
     Product createdProduct = productRepository.save(item);
-    return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+    return ResponseEntity.ok().body(createdProduct);
   }
 
   @Transactional
@@ -125,23 +124,15 @@ class ProductController {
     @PathVariable("id") Long id,
     @RequestBody Product item
   ) {
-    Product product = productRepository
-      .findById(id)
-      .orElseThrow(NoSuchElementException::new);
+    item.setId(id);
+    Product savedProduct = productRepository.save(item);
 
-    productRepository.deleteById(id);
-
-    return ResponseEntity.ok().body(product);
+    return ResponseEntity.ok().body(savedProduct);
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-    Product product = productRepository
-      .findById(id)
-      .orElseThrow(NoSuchElementException::new);
-
+  public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
     productRepository.deleteById(id);
-
-    return ResponseEntity.ok().body(product);
+    return ResponseEntity.ok().body(true);
   }
 }

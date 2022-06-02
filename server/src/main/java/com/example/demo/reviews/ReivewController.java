@@ -1,5 +1,6 @@
 package com.example.demo.reviews;
 
+import com.example.demo.reviews.dto.UpdateReviewStatusDto;
 import com.example.demo.reviews.entity.Review;
 import com.example.demo.reviews.repository.ReviewMapper;
 import com.example.demo.reviews.repository.ReviewRepository;
@@ -9,6 +10,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +24,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "Review")
 @RequestMapping("/reviews")
+@CrossOrigin(origins = "http://localhost:3000")
 class ReviewController {
 
-  @Autowired
-  ReviewRepository repository;
+  private final ReviewRepository reviewRepository;
+  private final ReviewMapper reviewMapper;
 
   @Autowired
-  ReviewMapper reviewMapper;
+  ReviewController(
+    ReviewRepository reviewRepository,
+    ReviewMapper reviewMapper
+  ) {
+    this.reviewRepository = reviewRepository;
+    this.reviewMapper = reviewMapper;
+  }
 
   @GetMapping("test")
   public void Test() {}
@@ -119,7 +128,7 @@ class ReviewController {
 
   @GetMapping("{id}")
   public ResponseEntity<Review> getById(@PathVariable("id") Long id) {
-    Review review = repository
+    Review review = reviewRepository
       .findById(id)
       .orElseThrow(NoSuchElementException::new);
 
@@ -128,20 +137,24 @@ class ReviewController {
 
   @PostMapping
   public ResponseEntity<Review> create(@RequestBody List<Review> item) {
-    repository.saveAll(item);
+    reviewRepository.saveAll(item);
     return null;
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<Review> update(
+  public ResponseEntity<Boolean> update(
     @PathVariable("id") Long id,
-    @RequestBody Review item
+    @RequestBody UpdateReviewStatusDto dto
   ) {
-    return null;
+    String newStatus = dto.getStatus();
+    Integer updateResult = reviewMapper.updateReviewStatus(id, newStatus);
+
+    return ResponseEntity.ok().body(updateResult > 0);
   }
 
   @DeleteMapping("{id}")
   public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
+    System.out.println(id);
     return null;
   }
 }

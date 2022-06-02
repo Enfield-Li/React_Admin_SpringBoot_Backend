@@ -31,8 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/commands")
 class CommandController {
 
-  CommandRepository commandRepository;
-  CommandMapper commandMapper;
+  private final CommandRepository commandRepository;
+  private final CommandMapper commandMapper;
 
   @Autowired
   CommandController(

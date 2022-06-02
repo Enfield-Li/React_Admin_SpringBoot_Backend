@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("customers")
 public class CustomerController {
 
-  CustomerMapper customerMapper;
-  CustomerRepository customerRepository;
+  private final CustomerMapper customerMapper;
+  private final CustomerRepository customerRepository;
   private static final String ID_STR = "id";
   private static final String GROUPS_STR = "groups";
   private static final String TOTAL_SPENT_STR = "total_spent";

@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/invoices")
 class InvoiceController {
 
-  InvoiceRepository invoiceRepository;
-  InvoiceMapper invoiceMapper;
+  private final InvoiceRepository invoiceRepository;
+  private final InvoiceMapper invoiceMapper;
 
   @Autowired
   InvoiceController(
