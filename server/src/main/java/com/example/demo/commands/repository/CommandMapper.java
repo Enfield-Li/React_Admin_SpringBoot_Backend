@@ -4,6 +4,7 @@ import com.example.demo.commands.dto.CommandDto;
 import com.example.demo.commands.entity.Command;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +18,7 @@ public interface CommandMapper {
     @Param("sort") String sort,
     @Param("order") String order,
     @Param("status") String status,
-    @Param("date_gte") Instant date_gte,
+    @Param("date_gte") String date_gte,
     @Param("customer_id") String customer_id
   );
 

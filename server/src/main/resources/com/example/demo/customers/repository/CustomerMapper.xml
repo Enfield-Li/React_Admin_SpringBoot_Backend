@@ -12,6 +12,8 @@
             <if test="nb_commands_gte != null">AND c.nb_commands >= #{nb_commands_gte}</if>
             <if test="has_newsletter != null">AND c.has_newsletter = #{has_newsletter}</if>
             <if test="groups != null">AND cg.group_type_name = #{groups}</if>
+            <if test="firstName != null">AND c.first_name = #{firstName}</if>
+            <if test="lastName != null">AND c.last_name = #{lastName}</if>
         </where>
         GROUP BY c.id
         ORDER BY ${sort} ${order}

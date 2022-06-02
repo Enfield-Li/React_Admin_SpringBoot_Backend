@@ -18,6 +18,8 @@
         <where>
             <if test="product_id != null">product_id = #{product_id}</if>
             <if test="status != null">AND status = #{status}</if>
+            <if test="customer_id != null">AND customer_id = #{customer_id}</if>
+            <!-- <if test="customer_id != null">AND customer_id = #{customer_id}</if> -->
         </where>
     </select>
 

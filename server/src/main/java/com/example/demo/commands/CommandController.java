@@ -46,22 +46,11 @@ class CommandController {
 
   @PutMapping("test")
   @Transactional
-  public void Test(@RequestBody Command item) {
-    List<Basket> baskets = item.getBasket();
-
-    List<Basket> newBaskets = new ArrayList<>();
-    baskets.forEach(
-      i -> {
-        newBaskets.add(Basket.of(i.getQuantity(), i.getProduct_id(), item));
-      }
-    );
-
-    item.setBasket(newBaskets);
-
-    commandRepository.save(item);
+  public void Test() {
+    String dateStr = "2022-04-07";
   }
 
-  /*  
+  /*
    *  URL example:
    *  http://localhost:3060/commands?_end=1&_order=ASC&_sort=id&_start=0&status=delivere
    *  http://localhost:3060/commands?_end=1&_order=ASC&_sort=id&_start=0&status=ordered
@@ -70,12 +59,15 @@ class CommandController {
    */
   @GetMapping(params = { "_start", "_end", "_sort", "_order" })
   public ResponseEntity<List<CommandDto>> getAll(
-    @RequestParam(name = "_start") Integer start,
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
+    @RequestParam(name = "_start") Integer start,
+    @RequestParam(name = "returned", required = false) String returned,
+    @RequestParam(name = "total_gte", required = false) String total_gte,
     @RequestParam(name = "status", required = false) String status,
-    @RequestParam(name = "date_gte", required = false) Instant date_gte,
+    @RequestParam(name = "date_lte", required = false) String date_lte,
+    @RequestParam(name = "date_gte", required = false) String date_gte,
     @RequestParam(name = "customer_id", required = false) String customer_id
   ) {
     Integer take = end - start;

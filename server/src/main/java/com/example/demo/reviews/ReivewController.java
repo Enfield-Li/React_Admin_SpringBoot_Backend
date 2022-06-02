@@ -52,11 +52,13 @@ class ReviewController {
       null,
       customer_id
     );
-    if (reviewsForProduct.size() > 0) System.out.println(
-      reviewsForProduct.get(0).toString()
-    );
 
-    return ResponseEntity.ok().body(reviewsForProduct);
+    String reviewCount = reviewMapper.getReviewCount(null, null, customer_id);
+
+    return ResponseEntity
+      .ok()
+      .header("X-Total-Count", reviewCount)
+      .body(reviewsForProduct);
   }
 
   @GetMapping(params = { "_start", "_end", "_sort", "_order", "product_id" })
@@ -79,7 +81,7 @@ class ReviewController {
       null
     );
 
-    String reviewCount = reviewMapper.getReviewCount(product_id, null);
+    String reviewCount = reviewMapper.getReviewCount(product_id, null, null);
 
     return ResponseEntity
       .ok()
@@ -93,7 +95,7 @@ class ReviewController {
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
-    @RequestParam(name = "status") String status
+    @RequestParam(name = "status", required = false) String status
   ) {
     Integer take = end - start;
 
@@ -107,7 +109,7 @@ class ReviewController {
       null
     );
 
-    String reviewCount = reviewMapper.getReviewCount(null, status);
+    String reviewCount = reviewMapper.getReviewCount(null, status, null);
 
     return ResponseEntity
       .ok()

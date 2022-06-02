@@ -19,6 +19,7 @@ public interface ReviewMapper {
 
   public String getReviewCount(
     @Param("product_id") Long product_id,
-    @Param("status") String status
+    @Param("status") String status,
+    @Param("customer_id") Long customer_id
   );
 }
