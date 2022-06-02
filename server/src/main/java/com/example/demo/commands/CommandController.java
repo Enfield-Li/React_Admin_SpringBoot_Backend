@@ -56,12 +56,13 @@ class CommandController {
     commandRepository.save(item);
   }
 
-  @GetMapping(params = { "_start", "_end", "_sort", "_order" })
+  @GetMapping(params = { "_start", "_end", "_sort", "_order", "status" })
   public ResponseEntity<List<Command>> getAll(
     @RequestParam(name = "_start") Integer start,
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
-    @RequestParam(name = "_order") String order
+    @RequestParam(name = "_order") String order,
+    @RequestParam(name = "status") String status
   ) {
     Integer take = end - start;
 
@@ -69,10 +70,11 @@ class CommandController {
       start,
       take,
       sort,
-      order
+      order,
+      status
     );
 
-    String commandCount = commandMapper.getCommandCount();
+    String commandCount = commandMapper.getCommandCount(status);
 
     return ResponseEntity
       .ok()
@@ -94,7 +96,7 @@ class CommandController {
     Command command = commandRepository
       .findById(id)
       .orElseThrow(NoSuchElementException::new);
-    
+
     return ResponseEntity.ok().body(command);
   }
 

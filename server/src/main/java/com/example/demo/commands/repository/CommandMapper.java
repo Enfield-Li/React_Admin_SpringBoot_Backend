@@ -11,18 +11,21 @@ public interface CommandMapper {
   @Select(
     "SELECT *" +
     " FROM command" +
+    " WHERE status = #{status}" +
     " ORDER BY ${sort} ${order}" +
     " LIMIT #{take} OFFSET #{start}"
   )
+  // select c.*, b.product_id, b.quantity from command c left join basket b on b.command_id = c.id;
   public List<Command> getPaginatedcommands(
     @Param("start") Integer start,
     @Param("take") Integer take,
     @Param("sort") String sort,
-    @Param("order") String order
+    @Param("order") String order,
+    @Param("status") String status
   );
 
-  @Select("SELECT COUNT(*) FROM command")
-  public String getCommandCount();
+  @Select("SELECT COUNT(*) FROM command WHERE status = #{status}")
+  public String getCommandCount(@Param("status") String status);
 
   public List<Command> getManyCommands(List<Long> ids);
 }
