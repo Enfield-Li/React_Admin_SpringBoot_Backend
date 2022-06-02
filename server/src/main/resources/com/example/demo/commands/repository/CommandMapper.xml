@@ -10,7 +10,9 @@
         ON b.command_id = c.id
         <where>
             <if test="status != null"> c.status = #{status} </if>
+            <if test="returned != null">AND c.returned = #{returned} </if>
             <if test="date_gte != null"> AND c.date > #{date_gte} </if>
+            <if test="date_lte != null"> AND c.date <![CDATA[ < ]]> #{date_lte} </if>
             <if test="total_gte != null"> AND c.total_ex_taxes > #{total_gte} </if>
             <if test="customer_id != null"> AND c.customer_id = #{customer_id} </if>
         </where>
@@ -23,7 +25,9 @@
         SELECT COUNT(c.id) FROM command c
         <where>
             <if test="status != null"> c.status = #{status} </if>
+            <if test="returned != null">AND c.returned = #{returned} </if>
             <if test="date_gte != null"> AND c.date > #{date_gte} </if>
+            <if test="date_lte != null"> AND c.date <![CDATA[ < ]]> #{date_lte} </if>
             <if test="total_gte != null"> AND c.total_ex_taxes > #{total_gte} </if>
             <if test="customer_id != null"> AND c.customer_id = #{customer_id} </if>
         </where>

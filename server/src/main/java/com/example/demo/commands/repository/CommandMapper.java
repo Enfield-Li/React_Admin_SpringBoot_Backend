@@ -2,12 +2,9 @@ package com.example.demo.commands.repository;
 
 import com.example.demo.commands.dto.CommandDto;
 import com.example.demo.commands.entity.Command;
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface CommandMapper {
@@ -18,15 +15,19 @@ public interface CommandMapper {
     @Param("order") String order,
     @Param("status") String status,
     @Param("date_gte") String date_gte,
-    @Param("customer_id") String customer_id,
-    @Param("total_gte") String total_gte
+    @Param("date_lte") String date_lte,
+    @Param("customer_id") Long customer_id,
+    @Param("total_gte") String total_gte,
+    @Param("returned") Boolean returned
   );
 
   public String getCommandCount(
     @Param("status") String status,
     @Param("date_gte") String date_gte,
-    @Param("customer_id") String customer_id,
-    @Param("total_gte") String total_gte
+    @Param("date_lte") String date_lte,
+    @Param("customer_id") Long customer_id,
+    @Param("total_gte") String total_gte,
+    @Param("returned") Boolean returned
   );
 
   public List<Command> getManyCommands(List<Long> ids);

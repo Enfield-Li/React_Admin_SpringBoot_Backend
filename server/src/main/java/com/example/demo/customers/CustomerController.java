@@ -126,7 +126,8 @@ public class CustomerController {
       last_seen_gte,
       last_seen_lte,
       nb_commands_gte,
-      nb_commands_lte
+      nb_commands_lte,
+      customerName
     );
 
     return ResponseEntity

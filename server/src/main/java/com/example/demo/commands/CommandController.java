@@ -7,7 +7,6 @@ import com.example.demo.commands.entity.Command;
 import com.example.demo.commands.repository.CommandMapper;
 import com.example.demo.commands.repository.CommandRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,12 +62,12 @@ class CommandController {
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
     @RequestParam(name = "_start") Integer start,
-    @RequestParam(name = "returned", required = false) String returned,
+    @RequestParam(name = "returned", required = false) Boolean returned,
     @RequestParam(name = "total_gte", required = false) String total_gte,
     @RequestParam(name = "status", required = false) String status,
     @RequestParam(name = "date_lte", required = false) String date_lte,
     @RequestParam(name = "date_gte", required = false) String date_gte,
-    @RequestParam(name = "customer_id", required = false) String customer_id
+    @RequestParam(name = "customer_id", required = false) Long customer_id
   ) {
     Integer take = end - start;
 
@@ -79,15 +78,19 @@ class CommandController {
       order,
       status,
       date_gte,
+      date_lte,
       customer_id,
-      total_gte
+      total_gte,
+      returned
     );
 
     String commandCount = commandMapper.getCommandCount(
       status,
       date_gte,
+      date_lte,
       customer_id,
-      total_gte
+      total_gte,
+      returned
     );
 
     return ResponseEntity

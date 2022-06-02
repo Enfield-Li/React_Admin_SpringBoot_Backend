@@ -38,8 +38,8 @@ public interface CustomerMapper {
     @Param("last_seen_gte") Instant last_seen_gte,
     @Param("last_seen_lte") Instant last_seen_lte,
     @Param("nb_commands_gte") Integer nb_commands_gte,
-    @Param("nb_commands_lte") Integer nb_commands_lte
- 
+    @Param("nb_commands_lte") Integer nb_commands_lte,
+    @Param("customerName") String customerName
   );
 
   public List<CustomerDto> getManyCustomers(List<Long> ids);
