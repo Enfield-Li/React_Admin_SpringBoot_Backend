@@ -28,9 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("customers")
 public class CustomerController {
 
-  private static final String CUSTOMER_ID_STR = "customer_id";
-  CustomerRepository customerRepository;
   CustomerMapper customerMapper;
+  CustomerRepository customerRepository;
+  private static final String ID_STR = "id";
+  private static final String GROUPS_STR = "groups";
+  private static final String CUSTOMER_ID_STR = "customer_id"; // means id
 
   @Autowired
   CustomerController(
@@ -72,7 +74,7 @@ public class CustomerController {
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
-    @RequestParam(name = "groups", required = false) String groups,
+    @RequestParam(name = GROUPS_STR, required = false) String groups,
     @RequestParam(
       name = "last_seen_gte",
       required = false
@@ -95,7 +97,9 @@ public class CustomerController {
     ) Integer nb_commands_lte
   ) {
     Integer take = end - start;
-    sort = sort.equals(CUSTOMER_ID_STR) ? "id" : sort;
+    /* Defalut back to sort by "id" */
+    sort = sort.equals(CUSTOMER_ID_STR) ? ID_STR : sort;
+    sort = sort.equals(GROUPS_STR) ? ID_STR : sort;
 
     List<CustomerDto> customerQueryResult = customerMapper.getCustomerQueryResult(
       start,

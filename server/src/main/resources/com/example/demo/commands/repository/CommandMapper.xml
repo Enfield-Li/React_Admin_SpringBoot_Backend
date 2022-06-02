@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.commands.repository.CommandMapper">
+    <!-- <select id="getCustomerQueryResult" resultType="com.example.demo.customers.dto.CustomerDto">
+        SELECT c.*, GROUP_CONCAT(DISTINCT cg.group_type_name) as 'groupsStr'
+        FROM customer c
+        LEFT JOIN customer_group cg ON cg.customer_id = c.id
+        <where>
+            <if test="last_seen_gte != null">c.last_seen > #{last_seen_gte}</if>
+            <if test="last_seen_lte != null"> AND c.last_seen <![CDATA[ < ]]> #{last_seen_lte} </if>
+            <if test="nb_commands_lte != null">AND c.nb_commands = #{nb_commands_lte}</if>
+            <if test="nb_commands_gte != null">AND c.nb_commands >= #{nb_commands_gte}</if>
+            <if test="has_newsletter != null">AND c.has_newsletter = #{has_newsletter}</if>
+            <if test="groups != null">AND cg.group_type_name = #{groups}</if>
+        </where>
+        GROUP BY c.id
+        ORDER BY ${sort} ${order}
+        LIMIT #{take} OFFSET #{start}
+    </select>
+
+    <select id="getCustomerCount" resultType="String">
+        SELECT COUNT(DISTINCT c.id) 
+        FROM customer c
+        LEFT JOIN customer_group cg ON cg.customer_id = c.id
+        <where>
+            <if test="last_seen_gte != null">c.last_seen > #{last_seen_gte}</if>
+            <if test="last_seen_lte != null"> AND c.last_seen <![CDATA[ < ]]> #{last_seen_lte} </if>
+            <if test="nb_commands_lte != null">AND c.nb_commands = #{nb_commands_lte}</if>
+            <if test="nb_commands_gte != null">AND c.nb_commands >= #{nb_commands_gte}</if>
+            <if test="has_newsletter != null">AND c.has_newsletter = #{has_newsletter}</if>
+            <if test="groups != null">AND cg.group_type_name = #{groups}</if>
+        </where>
+    </select> -->
+
+    <select id="getManyCommands" resultType="com.example.demo.commands.entity.Command">
+        SELECT *
+        FROM command
+        WHERE id IN
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+    </select>
+</mapper>

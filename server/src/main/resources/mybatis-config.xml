@@ -13,5 +13,7 @@
         <mapper resource="com/example/demo/products/repository/ProductMapper.xml" />
         <mapper resource="com/example/demo/reviews/repository/ReviewMapper.xml" />
         <mapper resource="com/example/demo/customers/repository/CustomerMapper.xml" />
+        <mapper resource="com/example/demo/commands/repository/CommandMapper.xml" />
+        <mapper resource="com/example/demo/invoices/repository/InvoiceMapper.xml" />
     </mappers>
 </configuration>

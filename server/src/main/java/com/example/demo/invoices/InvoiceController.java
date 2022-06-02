@@ -1,11 +1,10 @@
 package com.example.demo.invoices;
 
 import com.example.demo.invoices.entity.Invoice;
+import com.example.demo.invoices.repository.InvoiceMapper;
 import com.example.demo.invoices.repository.InvoiceRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/invoices")
 class InvoiceController {
 
+  InvoiceRepository invoiceRepository;
+  InvoiceMapper invoiceMapper;
+
   @Autowired
-  InvoiceRepository repository;
+  InvoiceController(
+    InvoiceRepository invoiceRepository,
+    InvoiceMapper invoiceMapper
+  ) {
+    this.invoiceRepository = invoiceRepository;
+    this.invoiceMapper = invoiceMapper;
+  }
 
   @GetMapping("test")
   public void Test() {}
@@ -40,11 +48,19 @@ class InvoiceController {
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order
   ) {
-    List<Invoice> invoices = repository.findAll();
+    Integer take = end - start;
+
+    List<Invoice> invoices = invoiceMapper.getPaginatedInvoices(
+      start,
+      take,
+      sort,
+      order
+    );
+    String invoiceCount = invoiceMapper.getInvoiceCount();
 
     return ResponseEntity
       .ok()
-      .header("X-Total-Count", invoices.size() + "")
+      .header("X-Total-Count", invoiceCount)
       .body(invoices);
   }
 
@@ -55,7 +71,7 @@ class InvoiceController {
 
   @PostMapping
   public ResponseEntity<Invoice> create(@RequestBody List<Invoice> item) {
-    repository.saveAll(item);
+    invoiceRepository.saveAll(item);
     return null;
   }
 
