@@ -4,7 +4,9 @@
     <select id="getPaginatedReviews" resultType="com.example.demo.reviews.entity.Review">
         SELECT * FROM review
         <where>
-            <if test="productId != null">product_id = #{productId}</if>
+            <if test="product_id != null">product_id = #{product_id}</if>
+            <if test="customer_id != null">AND customer_id = #{customer_id}</if>
+            <if test="status != null">AND status = #{status}</if>
         </where>
         ORDER BY ${sort} ${order}
         LIMIT #{take} 
@@ -14,7 +16,8 @@
     <select id="getReviewCount" resultType="String">
         SELECT count(*) AS count from review
         <where>
-            <if test="productId != null">product_id = #{productId}</if>
+            <if test="product_id != null">product_id = #{product_id}</if>
+            <if test="status != null">AND status = #{status}</if>
         </where>
     </select>
 

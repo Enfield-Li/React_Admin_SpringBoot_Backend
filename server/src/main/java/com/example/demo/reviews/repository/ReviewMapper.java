@@ -12,8 +12,13 @@ public interface ReviewMapper {
     @Param("take") Integer take,
     @Param("sort") String sort,
     @Param("order") String order,
-    @Param("productId") Long productId
+    @Param("status") String status,
+    @Param("product_id") Long product_id,
+    @Param("customer_id") Long customer_id
   );
 
-  public String getReviewCount(@Param("productId") Long productId);
+  public String getReviewCount(
+    @Param("product_id") Long product_id,
+    @Param("status") String status
+  );
 }

@@ -4,9 +4,8 @@ import com.example.demo.reviews.entity.Review;
 import com.example.demo.reviews.repository.ReviewMapper;
 import com.example.demo.reviews.repository.ReviewRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +33,13 @@ class ReviewController {
   @GetMapping("test")
   public void Test() {}
 
-  @GetMapping(params = { "_start", "_end", "_sort", "_order", "product_id" })
-  public ResponseEntity<List<Review>> getReviewForProduct(
+  @GetMapping(params = { "_start", "_end", "_sort", "_order", "customer_id" })
+  public ResponseEntity<List<Review>> getReviewForCustomer(
     @RequestParam(name = "_start") Integer start,
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
-    @RequestParam(name = "product_id", required = false) Long productId
+    @RequestParam(name = "customer_id", required = false) Long customer_id
   ) {
     Integer take = end - start;
 
@@ -49,10 +48,38 @@ class ReviewController {
       take,
       sort,
       order,
-      productId
+      null,
+      null,
+      customer_id
+    );
+    if (reviewsForProduct.size() > 0) System.out.println(
+      reviewsForProduct.get(0).toString()
     );
 
-    String reviewCount = reviewMapper.getReviewCount(productId);
+    return ResponseEntity.ok().body(reviewsForProduct);
+  }
+
+  @GetMapping(params = { "_start", "_end", "_sort", "_order", "product_id" })
+  public ResponseEntity<List<Review>> getReviewForProduct(
+    @RequestParam(name = "_start") Integer start,
+    @RequestParam(name = "_end") Integer end,
+    @RequestParam(name = "_sort") String sort,
+    @RequestParam(name = "_order") String order,
+    @RequestParam(name = "product_id", required = false) Long product_id
+  ) {
+    Integer take = end - start;
+
+    List<Review> reviewsForProduct = reviewMapper.getPaginatedReviews(
+      start,
+      take,
+      sort,
+      order,
+      null,
+      product_id,
+      null
+    );
+
+    String reviewCount = reviewMapper.getReviewCount(product_id, null);
 
     return ResponseEntity
       .ok()
@@ -65,7 +92,8 @@ class ReviewController {
     @RequestParam(name = "_start") Integer start,
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
-    @RequestParam(name = "_order") String order
+    @RequestParam(name = "_order") String order,
+    @RequestParam(name = "status") String status
   ) {
     Integer take = end - start;
 
@@ -74,10 +102,12 @@ class ReviewController {
       take,
       sort,
       order,
+      status,
+      null,
       null
     );
 
-    String reviewCount = reviewMapper.getReviewCount(null);
+    String reviewCount = reviewMapper.getReviewCount(null, status);
 
     return ResponseEntity
       .ok()
@@ -87,7 +117,11 @@ class ReviewController {
 
   @GetMapping("{id}")
   public ResponseEntity<Review> getById(@PathVariable("id") Long id) {
-    return null;
+    Review review = repository
+      .findById(id)
+      .orElseThrow(NoSuchElementException::new);
+
+    return ResponseEntity.ok().body(review);
   }
 
   @PostMapping

@@ -7,6 +7,7 @@ import com.example.demo.commands.entity.Command;
 import com.example.demo.commands.repository.CommandMapper;
 import com.example.demo.commands.repository.CommandRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,13 +61,22 @@ class CommandController {
     commandRepository.save(item);
   }
 
-  @GetMapping(params = { "_start", "_end", "_sort", "_order", "status" })
+  /*  
+   *  URL example:
+   *  http://localhost:3060/commands?_end=1&_order=ASC&_sort=id&_start=0&status=delivere
+   *  http://localhost:3060/commands?_end=1&_order=ASC&_sort=id&_start=0&status=ordered
+   *  http://localhost:3060/commands?_end=1&_order=ASC&_sort=id&_start=0&status=cancelled
+   *  http://localhost:3060/commands?_end=50&_order=DESC&_sort=date&_start=0&date_gte=2022-05-02T16:00:00.000Z
+   */
+  @GetMapping(params = { "_start", "_end", "_sort", "_order" })
   public ResponseEntity<List<CommandDto>> getAll(
     @RequestParam(name = "_start") Integer start,
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
-    @RequestParam(name = "status") String status
+    @RequestParam(name = "status", required = false) String status,
+    @RequestParam(name = "date_gte", required = false) Instant date_gte,
+    @RequestParam(name = "customer_id", required = false) String customer_id
   ) {
     Integer take = end - start;
 
@@ -75,7 +85,9 @@ class CommandController {
       take,
       sort,
       order,
-      status
+      status,
+      date_gte,
+      customer_id
     );
 
     String commandCount = commandMapper.getCommandCount(status);
@@ -157,11 +169,10 @@ class CommandController {
   /*
    * Convert productId_quantity string to ArrayList<BasketDto>
    *
-   * For instance:
-   *    From
-   *      String productId_quantity: "55,3,111,3";
-   *    TO
-   *      ArrayList<BasketDto>: [ { "quantity": 3, "product_id": 55 }, { "quantity": 3, "product_id": 111 } ]
+   * From
+   *   String productId_quantity: "55,3,111,3";
+   * TO
+   *   ArrayList<BasketDto>: [ { "quantity": 3, "product_id": 55 }, { "quantity": 3, "product_id": 111 } ]
    */
   private ArrayList<BasketDto> processBasketeDtoList(
     String productId_quantity
@@ -174,9 +185,6 @@ class CommandController {
 
     for (int i = 0; i < flatList.size(); i += 2) {
       nestedList.add(new ArrayList<String>());
-    }
-
-    for (int i = 0; i < flatList.size(); i += 2) {
       nestedList.get(i / 2).add(flatList.get(i));
       nestedList.get(i / 2).add(flatList.get(i + 1));
     }
