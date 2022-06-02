@@ -32,6 +32,7 @@ public class CustomerController {
   CustomerRepository customerRepository;
   private static final String ID_STR = "id";
   private static final String GROUPS_STR = "groups";
+  private static final String TOTAL_SPENT_STR = "total_spent";
   private static final String CUSTOMER_ID_STR = "customer_id"; // means id
 
   @Autowired
@@ -74,7 +75,7 @@ public class CustomerController {
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
-    @RequestParam(name = GROUPS_STR, required = false) String groups,
+    @RequestParam(name = "groups", required = false) String groups,
     @RequestParam(name = "q", required = false) String customerName,
     @RequestParam(
       name = "last_seen_gte",
@@ -101,15 +102,7 @@ public class CustomerController {
 
     /* Defalut back to sort by "id" */
     sort = sort.equals(CUSTOMER_ID_STR) ? ID_STR : sort;
-    sort = sort.equals(GROUPS_STR) ? ID_STR : sort;
-
-    String firstName = null;
-    String lastName = null;
-    if (customerName != null) {
-      String[] fullName = customerName.split(" ");
-      firstName = fullName[0];
-      lastName = fullName[1];
-    }
+    sort = sort.equals(GROUPS_STR) ? TOTAL_SPENT_STR : sort;
 
     List<CustomerDto> customerQueryResult = customerMapper.getCustomerQueryResult(
       start,
@@ -122,8 +115,7 @@ public class CustomerController {
       last_seen_lte,
       nb_commands_gte,
       nb_commands_lte,
-      firstName,
-      lastName
+      customerName
     );
 
     List<CustomerDto> customerList = buildCustomerList(customerQueryResult);

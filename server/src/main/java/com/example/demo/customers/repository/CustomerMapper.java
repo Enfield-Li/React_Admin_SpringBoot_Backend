@@ -29,8 +29,7 @@ public interface CustomerMapper {
     @Param("last_seen_lte") Instant last_seen_lte,
     @Param("nb_commands_gte") Integer nb_commands_gte,
     @Param("nb_commands_lte") Integer nb_commands_lte,
-    @Param("firstName") String firstName,
-    @Param("lastName") String lastName
+    @Param("customerName") String customerName
   );
 
   public String getCustomerCount(
