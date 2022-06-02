@@ -2,7 +2,6 @@ package com.example.demo.commands.repository;
 
 import com.example.demo.commands.dto.CommandDto;
 import com.example.demo.commands.entity.Command;
-
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -19,11 +18,16 @@ public interface CommandMapper {
     @Param("order") String order,
     @Param("status") String status,
     @Param("date_gte") String date_gte,
-    @Param("customer_id") String customer_id
+    @Param("customer_id") String customer_id,
+    @Param("total_gte") String total_gte
   );
 
-  @Select("SELECT COUNT(*) FROM command WHERE status = #{status}")
-  public String getCommandCount(@Param("status") String status);
+  public String getCommandCount(
+    @Param("status") String status,
+    @Param("date_gte") String date_gte,
+    @Param("customer_id") String customer_id,
+    @Param("total_gte") String total_gte
+  );
 
   public List<Command> getManyCommands(List<Long> ids);
 }

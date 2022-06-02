@@ -11,11 +11,22 @@
         <where>
             <if test="status != null"> c.status = #{status} </if>
             <if test="date_gte != null"> AND c.date > #{date_gte} </if>
+            <if test="total_gte != null"> AND c.total_ex_taxes > #{total_gte} </if>
             <if test="customer_id != null"> AND c.customer_id = #{customer_id} </if>
         </where>
         GROUP BY c.id 
         ORDER BY c.${sort} ${order} 
         LIMIT #{take} OFFSET #{start}
+    </select>
+
+    <select id="getCommandCount" resultType="String">
+        SELECT COUNT(c.id) FROM command c
+        <where>
+            <if test="status != null"> c.status = #{status} </if>
+            <if test="date_gte != null"> AND c.date > #{date_gte} </if>
+            <if test="total_gte != null"> AND c.total_ex_taxes > #{total_gte} </if>
+            <if test="customer_id != null"> AND c.customer_id = #{customer_id} </if>
+        </where>
     </select>
 
     <select id="getManyCommands" resultType="com.example.demo.commands.entity.Command">

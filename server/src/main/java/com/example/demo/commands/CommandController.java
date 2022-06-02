@@ -79,10 +79,16 @@ class CommandController {
       order,
       status,
       date_gte,
-      customer_id
+      customer_id,
+      total_gte
     );
 
-    String commandCount = commandMapper.getCommandCount(status);
+    String commandCount = commandMapper.getCommandCount(
+      status,
+      date_gte,
+      customer_id,
+      total_gte
+    );
 
     return ResponseEntity
       .ok()
