@@ -1,7 +1,6 @@
 package com.example.demo.customers.repository;
 
 import com.example.demo.customers.dto.CustomerDto;
-import com.example.demo.customers.entity.Customer;
 import java.time.Instant;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
