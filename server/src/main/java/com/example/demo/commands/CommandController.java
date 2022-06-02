@@ -1,13 +1,17 @@
 package com.example.demo.commands;
 
+import com.example.demo.commands.dto.BasketDto;
+import com.example.demo.commands.dto.CommandDto;
 import com.example.demo.commands.entity.Basket;
 import com.example.demo.commands.entity.Command;
 import com.example.demo.commands.repository.CommandMapper;
 import com.example.demo.commands.repository.CommandRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,7 +61,7 @@ class CommandController {
   }
 
   @GetMapping(params = { "_start", "_end", "_sort", "_order", "status" })
-  public ResponseEntity<List<Command>> getAll(
+  public ResponseEntity<List<CommandDto>> getAll(
     @RequestParam(name = "_start") Integer start,
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
@@ -66,7 +70,7 @@ class CommandController {
   ) {
     Integer take = end - start;
 
-    List<Command> commands = commandMapper.getPaginatedcommands(
+    List<CommandDto> commandsQueRes = commandMapper.getPaginatedcommands(
       start,
       take,
       sort,
@@ -79,7 +83,7 @@ class CommandController {
     return ResponseEntity
       .ok()
       .header("X-Total-Count", commandCount)
-      .body(commands);
+      .body(buildCommandsDtoList(commandsQueRes));
   }
 
   @GetMapping(params = "id")
@@ -131,5 +135,63 @@ class CommandController {
   @DeleteMapping("{id}")
   public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
     return null;
+  }
+
+  private List<CommandDto> buildCommandsDtoList(
+    List<CommandDto> commandsQueRes
+  ) {
+    return commandsQueRes
+      .stream()
+      .map(
+        customer -> {
+          String productId_quantity = customer.getProductId_quantity();
+
+          customer.setBasket(processBasketeDtoList(productId_quantity));
+          customer.setProductId_quantity(null);
+          return customer;
+        }
+      )
+      .collect(Collectors.toList());
+  }
+
+  /*
+   * Convert productId_quantity string to ArrayList<BasketDto>
+   *
+   * For instance:
+   *    From
+   *      String productId_quantity: "55,3,111,3";
+   *    TO
+   *      ArrayList<BasketDto>: [ { "quantity": 3, "product_id": 55 }, { "quantity": 3, "product_id": 111 } ]
+   */
+  private ArrayList<BasketDto> processBasketeDtoList(
+    String productId_quantity
+  ) {
+    ArrayList<String> flatList = new ArrayList<String>(
+      Arrays.asList(productId_quantity.split(","))
+    );
+
+    ArrayList<ArrayList<String>> nestedList = new ArrayList<ArrayList<String>>();
+
+    for (int i = 0; i < flatList.size(); i += 2) {
+      nestedList.add(new ArrayList<String>());
+    }
+
+    for (int i = 0; i < flatList.size(); i += 2) {
+      nestedList.get(i / 2).add(flatList.get(i));
+      nestedList.get(i / 2).add(flatList.get(i + 1));
+    }
+
+    ArrayList<BasketDto> basketDtoList = new ArrayList<>();
+
+    for (int i = 0; i < nestedList.size(); i++) {
+      ArrayList<String> list = nestedList.get(i);
+
+      Long productIdLong = Long.parseLong(list.get(0));
+      Integer quantityInt = Integer.parseInt(list.get(1));
+
+      basketDtoList.add(BasketDto.of(quantityInt, productIdLong));
+    }
+
+    return basketDtoList;
   }
 }
