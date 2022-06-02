@@ -1,6 +1,6 @@
 package com.example.demo.customers.entity;
 
-import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Customer {
 
   @Id
-  @GeneratedValue(strategy = AUTO)
+  @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
   @Column(unique = true, nullable = false)

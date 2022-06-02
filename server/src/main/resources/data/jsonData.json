@@ -17326,10 +17326,6 @@
   ],
   "categories": [
     {
-      "id": 0,
-      "name": "animals"
-    },
-    {
       "id": 1,
       "name": "beard"
     },
@@ -17376,12 +17372,16 @@
     {
       "id": 12,
       "name": "water"
+    },
+    {
+      "id": 13,
+      "name": "animals"
     }
   ],
   "products": [
     {
       "id": 1,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Dog Grass",
       "width": 12.59,
       "height": 12.25,
@@ -17394,7 +17394,7 @@
     },
     {
       "id": 2,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Brown Cow",
       "width": 34.5,
       "height": 26.86,
@@ -17407,7 +17407,7 @@
     },
     {
       "id": 3,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Leopard Road",
       "width": 17.8,
       "height": 15.9,
@@ -17420,7 +17420,7 @@
     },
     {
       "id": 4,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Sad Dog",
       "width": 34.09,
       "height": 33.17,
@@ -17433,7 +17433,7 @@
     },
     {
       "id": 5,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Pelican Pier",
       "width": 25.07,
       "height": 30.99,
@@ -17446,7 +17446,7 @@
     },
     {
       "id": 6,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Green Birds",
       "width": 23.81,
       "height": 20.73,
@@ -17459,7 +17459,7 @@
     },
     {
       "id": 7,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Concrete Seaguls",
       "width": 29.96,
       "height": 26.23,
@@ -17472,7 +17472,7 @@
     },
     {
       "id": 8,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Hiding Seagul",
       "width": 18.09,
       "height": 16.05,
@@ -17485,7 +17485,7 @@
     },
     {
       "id": 9,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Sand Caravan",
       "width": 35.89,
       "height": 28.85,
@@ -19058,7 +19058,7 @@
     },
     {
       "id": 130,
-      "category_id": 0,
+      "category_id": 13,
       "reference": "Cat Nose",
       "width": 10.03,
       "height": 31.68,
