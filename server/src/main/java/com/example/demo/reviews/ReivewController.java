@@ -153,8 +153,9 @@ class ReviewController {
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
-    System.out.println(id);
-    return null;
+  public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
+    reviewRepository.deleteById(id);
+
+    return ResponseEntity.ok().body(true);
   }
 }
