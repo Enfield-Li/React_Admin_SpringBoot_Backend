@@ -4,7 +4,7 @@
 
 #### 项目描述:
 
-灵感来自 “[React-admin](https://marmelab.com/react-admin/) 的官方 [Demo 项目](https://marmelab.com/react-admin-demo/)”，本 SpringBoot 后端按照其对于api、数据的需求设计编写的，完全实现 Demo 的所有功能，前端源码来自 React-admin。
+灵感来自 “[React-admin](https://marmelab.com/react-admin/) 的官方 [Demo 项目](https://marmelab.com/react-admin-demo/)”，本项目按照其对于api、数据的需求设计编写的，完全实现 Demo 的所有功能，前端源码来自 React-admin。
 
 
 #### 技术栈:
