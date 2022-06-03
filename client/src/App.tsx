@@ -30,7 +30,14 @@ const i18nProvider = polyglotI18nProvider((locale) => {
   return englishMessages;
 }, "en");
 
+/* 
+ * Official data prvider config
+ */
 // const data = dataProviderFactory(process.env.REACT_APP_DATA_PROVIDER || "");
+
+/* 
+ * Using below data provider to connect to spring boot backend
+ */
 const data = simpleRestProvider("http://localhost:3060");
 // const data = jsonServerProvider("http://localhost:3060");
 
