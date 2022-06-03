@@ -18,7 +18,8 @@
 
 #### Description:
 
-    A backend project that provides data/url endpoint based on the demo's requirement, with frontend source code from React-admin.
+    A backend project that provides data/url endpoint based on the demo's requirement, 
+    which fulfills all the required functionalities, with frontend source code from React-admin.
 
 #### Stacks:
 
