@@ -1,11 +1,11 @@
-# 为 [React-admin](https://marmelab.com/react-admin/) 官方 [demo](https://marmelab.com/react-admin-demo/) 编写的 Springboot 项目
+# [React-admin](https://marmelab.com/react-admin/) SpringBoot 电商管理系统 
 
     ⏬⏬⏬ English Description Below ⏬⏬⏬
 
 #### 项目描述:
 
-    按 demo 对于数据和 url 端点的要求，编写的后端项目，
-    实现前端所需的所有功能，具体功能详见官方 demo，前端源码来自 React-admin。
+灵感来自 “[React-admin](https://marmelab.com/react-admin/) 的官方 [Demo 项目](https://marmelab.com/react-admin-demo/)”，本 SpringBoot 后端按照其对于api、数据的需求设计编写的，完全实现 Demo 的所有功能，前端源码来自 React-admin。
+
 
 #### 技术栈:
 
@@ -14,12 +14,11 @@
     额外依赖项：Lombok, OpenAPI
 
 
-# A Springboot project for [React-admin](https://marmelab.com/react-admin/) official [demo](https://marmelab.com/react-admin-demo/)
+# A Springboot E-commerce project for [React-admin](https://marmelab.com/react-admin/)
 
 #### Description:
 
-    A backend project that provides data/url endpoint based on the demo's requirement, 
-    which fulfills all the required functionalities, with frontend source code from React-admin.
+Inspired by the "[React-admin](https://marmelab.com/react-admin/)'s official [demo project](https://marmelab.com/react-admin-demo/)", and based on it's requirement to API and data, this backend project is designed and written in SpringBoot to support all of it's functionalities, with frontend source code from React-admin.
 
 #### Stacks:
 
