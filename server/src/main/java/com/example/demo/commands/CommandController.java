@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "Commands")
 @RequestMapping("/commands")
+@CrossOrigin(origins = "http://localhost:3000")
 class CommandController {
 
   private final CommandRepository commandRepository;
@@ -45,9 +47,7 @@ class CommandController {
 
   @PutMapping("test")
   @Transactional
-  public void Test() {
-    String dateStr = "2022-04-07";
-  }
+  public void Test() {}
 
   /*
    *  URL example:
@@ -117,37 +117,24 @@ class CommandController {
     return ResponseEntity.ok().body(command);
   }
 
-  @PostMapping
-  public ResponseEntity<Command> create(@RequestBody List<Command> items) {
-    for (Command item : items) {
-      List<Basket> baskets = item.getBasket();
-
-      List<Basket> newBaskets = new ArrayList<>();
-      baskets.forEach(
-        i -> {
-          newBaskets.add(Basket.of(i.getQuantity(), i.getProduct_id(), item));
-        }
-      );
-
-      item.setBasket(newBaskets);
-
-      commandRepository.save(item);
-    }
-
-    return null;
-  }
-
   @PutMapping("{id}")
   public ResponseEntity<Command> update(
     @PathVariable("id") Long id,
-    @RequestBody Command item
+    @RequestBody Command command
   ) {
-    return null;
+    Command updatedCommand = commandMapper.updateCommand(
+      command.getId(),
+      command.getStatus(),
+      command.getReturned()
+    );
+
+    return ResponseEntity.ok().body(updatedCommand);
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
-    return null;
+  public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
+    commandRepository.deleteById(id);
+    return ResponseEntity.ok().body(true);
   }
 
   private List<CommandDto> buildCommandsDtoList(
@@ -168,7 +155,7 @@ class CommandController {
   }
 
   /*
-   * Convert productId_quantity string to ArrayList<BasketDto>
+   * Convert String productId_quantity to ArrayList<BasketDto> basket
    *
    * From
    *   String productId_quantity: "55,3,111,3";
@@ -202,5 +189,23 @@ class CommandController {
     }
 
     return basketDtoList;
+  }
+
+  @PostMapping("bulk-insert")
+  public void create(@RequestBody List<Command> items) {
+    for (Command item : items) {
+      List<Basket> baskets = item.getBasket();
+
+      List<Basket> newBaskets = new ArrayList<>();
+      baskets.forEach(
+        i -> {
+          newBaskets.add(Basket.of(i.getQuantity(), i.getProduct_id(), item));
+        }
+      );
+
+      item.setBasket(newBaskets);
+
+      commandRepository.save(item);
+    }
   }
 }

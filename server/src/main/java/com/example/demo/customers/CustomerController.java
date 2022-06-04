@@ -11,8 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "customers")
 @RequestMapping("customers")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CustomerController {
 
   private final CustomerMapper customerMapper;
@@ -33,7 +34,7 @@ public class CustomerController {
   private static final String ID_STR = "id";
   private static final String GROUPS_STR = "groups";
   private static final String TOTAL_SPENT_STR = "total_spent";
-  private static final String CUSTOMER_ID_STR = "customer_id"; // means id
+  private static final String CUSTOMER_ID_STR = "customer_id";
 
   @Autowired
   CustomerController(
@@ -158,17 +159,20 @@ public class CustomerController {
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<?> update(
+  public ResponseEntity<Customer> update(
     @PathVariable("id") Long id,
-    @RequestBody CustomerDto item
+    @RequestBody Customer customer
   ) {
-    return null;
+    customer.setId(id);
+    Customer newCustomer = customerRepository.save(customer);
+
+    return ResponseEntity.ok().body(newCustomer);
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<HttpStatus> delete(@RequestParam("id") Long id) {
-    System.out.println("delete customer by id: " + id);
-    return null;
+  public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
+    customerRepository.deleteById(id);
+    return ResponseEntity.ok().body(true);
   }
 
   private List<CustomerDto> buildCustomerList(
@@ -182,12 +186,10 @@ public class CustomerController {
 
   private CustomerDto processGroupData(CustomerDto customer) {
     if (customer.getGroupsStr() != null) {
-      customer.setGroups(
-        new ArrayList<String>(Arrays.asList(customer.getGroupsStr().split(",")))
-      );
-      customer.setGroupsStr(null);
+      customer.setGroups(Arrays.asList(customer.getGroupsStr().split(",")));
     }
 
+    customer.setGroupsStr(null);
     return customer;
   }
 }

@@ -7,8 +7,8 @@ import com.example.demo.reviews.repository.ReviewRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -135,21 +135,20 @@ class ReviewController {
     return ResponseEntity.ok().body(review);
   }
 
-  @PostMapping
-  public ResponseEntity<Review> create(@RequestBody List<Review> item) {
-    reviewRepository.saveAll(item);
-    return null;
-  }
-
+  @Transactional
   @PutMapping("{id}")
-  public ResponseEntity<Boolean> update(
+  public ResponseEntity<Review> update(
     @PathVariable("id") Long id,
-    @RequestBody UpdateReviewStatusDto dto
+    @RequestBody Review review
   ) {
-    String newStatus = dto.getStatus();
-    Integer updateResult = reviewMapper.updateReviewStatus(id, newStatus);
+    Review updatedReview = reviewRepository
+      .findById(id)
+      .orElseThrow(NoSuchElementException::new);
 
-    return ResponseEntity.ok().body(updateResult > 0);
+    if (review.getStatus() != null) updatedReview.setStatus(review.getStatus());
+    if(review.getComment() != null) updatedReview.setComment(review.getComment());
+
+    return ResponseEntity.ok().body(updatedReview);
   }
 
   @DeleteMapping("{id}")
@@ -157,5 +156,10 @@ class ReviewController {
     reviewRepository.deleteById(id);
 
     return ResponseEntity.ok().body(true);
+  }
+
+  @PostMapping("bulk-insert")
+  public void create(@RequestBody List<Review> item) {
+    reviewRepository.saveAll(item);
   }
 }

@@ -1,12 +1,9 @@
 package com.example.demo.commands.dto;
 
-import com.example.demo.commands.entity.Basket;
-
-import lombok.Data;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class CommandDto {

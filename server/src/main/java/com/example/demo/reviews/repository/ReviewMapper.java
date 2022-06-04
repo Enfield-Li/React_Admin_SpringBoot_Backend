@@ -25,7 +25,7 @@ public interface ReviewMapper {
   );
 
   @Update("UPDATE review SET status = #{status} WHERE id = #{id}")
-  public Integer updateReviewStatus(
+  public Review updateReviewStatus(
     @Param("id") Long id,
     @Param("status") String status
   );

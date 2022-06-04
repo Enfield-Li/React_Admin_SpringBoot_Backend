@@ -8,6 +8,14 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface CommandMapper {
+  public List<Command> getManyCommands(List<Long> ids);
+
+  public Command updateCommand(
+    @Param("id") Long id,
+    @Param("status") String status,
+    @Param("returned") Boolean returned
+  );
+
   public List<CommandDto> getPaginatedcommands(
     @Param("start") Integer start,
     @Param("take") Integer take,
@@ -29,6 +37,4 @@ public interface CommandMapper {
     @Param("total_gte") String total_gte,
     @Param("returned") Boolean returned
   );
-
-  public List<Command> getManyCommands(List<Long> ids);
 }

@@ -41,4 +41,17 @@
           #{id}
         </foreach>
     </select>
+
+    <select id="updateCommand" resultType="com.example.demo.commands.entity.Command">
+        UPDATE command 
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="returned != null">
+                returned = #{returned}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </select>
 </mapper>

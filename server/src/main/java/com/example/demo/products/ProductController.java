@@ -40,10 +40,9 @@ class ProductController {
   @PutMapping("test")
   public void Test() {}
 
-  @PostMapping("bulk")
-  public ResponseEntity<?> bulk(@RequestBody List<Product> item) {
+  @PostMapping("bulk-insert")
+  public void bulk(@RequestBody List<Product> item) {
     productRepository.saveAll(item);
-    return null;
   }
 
   /* 
