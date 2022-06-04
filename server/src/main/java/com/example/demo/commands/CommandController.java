@@ -181,14 +181,14 @@ class CommandController {
 
     ArrayList<BasketDto> basketDtoList = new ArrayList<>();
 
-    for (int i = 0; i < nestedList.size(); i++) {
-      ArrayList<String> list = nestedList.get(i);
+    nestedList.forEach(
+      innerList -> {
+        Long productIdLong = Long.parseLong(innerList.get(0));
+        Integer quantityInt = Integer.parseInt(innerList.get(1));
 
-      Long productIdLong = Long.parseLong(list.get(0));
-      Integer quantityInt = Integer.parseInt(list.get(1));
-
-      basketDtoList.add(BasketDto.of(quantityInt, productIdLong));
-    }
+        basketDtoList.add(BasketDto.of(quantityInt, productIdLong));
+      }
+    );
 
     return basketDtoList;
   }
