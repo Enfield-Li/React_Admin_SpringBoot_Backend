@@ -15,13 +15,15 @@ public interface ReviewMapper {
     @Param("order") String order,
     @Param("status") String status,
     @Param("product_id") Long product_id,
-    @Param("customer_id") Long customer_id
+    @Param("customer_id") Long customer_id,
+    @Param("searchText") String searchText
   );
 
   public String getReviewCount(
     @Param("product_id") Long product_id,
     @Param("status") String status,
-    @Param("customer_id") Long customer_id
+    @Param("customer_id") Long customer_id,
+    @Param("searchText") String searchText
   );
 
   @Update("UPDATE review SET status = #{status} WHERE id = #{id}")

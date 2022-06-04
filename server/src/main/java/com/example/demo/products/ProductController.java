@@ -54,15 +54,16 @@ class ProductController {
   */
   @GetMapping(params = { "_start", "_end", "_sort", "_order" })
   public ResponseEntity<List<Product>> getAll(
-    @RequestParam(name = "_start") Integer start,
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
-    @RequestParam(name = "category_id", required = false) Long category_id,
+    @RequestParam(name = "_start") Integer start,
+    @RequestParam(name = "q", required = false) String queryByTitle,
     @RequestParam(name = "sales_gt", required = false) Integer sales_gt,
-    @RequestParam(name = "sales_lte", required = false) Integer sales_lte,
     @RequestParam(name = "stock_gt", required = false) Integer stock_gt,
-    @RequestParam(name = "stock_lt", required = false) Integer stock_lt
+    @RequestParam(name = "stock_lt", required = false) Integer stock_lt,
+    @RequestParam(name = "sales_lte", required = false) Integer sales_lte,
+    @RequestParam(name = "category_id", required = false) Long category_id
   ) {
     Integer take = end - start;
 
@@ -75,7 +76,8 @@ class ProductController {
       sales_gt,
       sales_lte,
       stock_gt,
-      stock_lt
+      stock_lt,
+      queryByTitle
     );
 
     String productCount = productMapper.getProductCount(
@@ -83,7 +85,8 @@ class ProductController {
       sales_gt,
       sales_lte,
       stock_gt,
-      stock_lt
+      stock_lt,
+      queryByTitle
     );
 
     return ResponseEntity

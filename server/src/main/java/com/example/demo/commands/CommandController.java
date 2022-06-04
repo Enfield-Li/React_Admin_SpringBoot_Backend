@@ -14,7 +14,6 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -67,7 +66,8 @@ class CommandController {
     @RequestParam(name = "status", required = false) String status,
     @RequestParam(name = "date_lte", required = false) String date_lte,
     @RequestParam(name = "date_gte", required = false) String date_gte,
-    @RequestParam(name = "customer_id", required = false) Long customer_id
+    @RequestParam(name = "customer_id", required = false) Long customer_id,
+    @RequestParam(name = "q", required = false) String queryByText
   ) {
     Integer take = end - start;
 
@@ -81,7 +81,8 @@ class CommandController {
       date_lte,
       customer_id,
       total_gte,
-      returned
+      returned,
+      queryByText
     );
 
     String commandCount = commandMapper.getCommandCount(
@@ -90,7 +91,8 @@ class CommandController {
       date_lte,
       customer_id,
       total_gte,
-      returned
+      returned,
+      queryByText
     );
 
     return ResponseEntity
@@ -160,7 +162,7 @@ class CommandController {
    * From
    *   String productId_quantity: "55,3,111,3";
    * TO
-   *   ArrayList<BasketDto>: [ { "quantity": 3, "product_id": 55 }, { "quantity": 3, "product_id": 111 } ]
+   *   ArrayList<BasketDto> basket: [ { "quantity": 3, "product_id": 55 }, { "quantity": 3, "product_id": 111 } ]
    */
   private ArrayList<BasketDto> processBasketeDtoList(
     String productId_quantity

@@ -77,7 +77,7 @@ public class CustomerController {
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
     @RequestParam(name = "groups", required = false) String groups,
-    @RequestParam(name = "q", required = false) String customerName,
+    @RequestParam(name = "q", required = false) String queryByName,
     @RequestParam(
       name = "last_seen_gte",
       required = false
@@ -116,7 +116,7 @@ public class CustomerController {
       last_seen_lte,
       nb_commands_gte,
       nb_commands_lte,
-      customerName
+      queryByName
     );
 
     List<CustomerDto> customerList = buildCustomerList(customerQueryResult);
@@ -128,7 +128,7 @@ public class CustomerController {
       last_seen_lte,
       nb_commands_gte,
       nb_commands_lte,
-      customerName
+      queryByName
     );
 
     return ResponseEntity

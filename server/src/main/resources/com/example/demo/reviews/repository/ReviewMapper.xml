@@ -2,24 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.reviews.repository.ReviewMapper">
     <select id="getPaginatedReviews" resultType="com.example.demo.reviews.entity.Review">
-        SELECT * FROM review
+        SELECT r.* FROM review r
+        LEFT JOIN customer c ON c.id = r.customer_id
         <where>
-            <if test="product_id != null">product_id = #{product_id}</if>
-            <if test="customer_id != null">AND customer_id = #{customer_id}</if>
-            <if test="status != null">AND status = #{status}</if>
+            <if test="status != null">r.status = #{status}</if>
+            <if test="product_id != null">AND r.product_id = #{product_id}</if>
+            <if test="customer_id != null">AND r.customer_id = #{customer_id}</if>
+            <if test="searchText != null">
+                AND r.comment like '%${searchText}%'
+                OR CONCAT_WS(' ', c.first_name, c.last_name) like '%${searchText}%'
+            </if>
         </where>
-        ORDER BY ${sort} ${order}
+        ORDER BY r.${sort} ${order}
         LIMIT #{take} 
         OFFSET #{start}
     </select>
 
     <select id="getReviewCount" resultType="String">
-        SELECT count(*) AS count from review
+        SELECT count(r.id) AS count FROM review r
+        LEFT JOIN customer c ON c.id = r.customer_id
         <where>
-            <if test="product_id != null">product_id = #{product_id}</if>
-            <if test="status != null">AND status = #{status}</if>
-            <if test="customer_id != null">AND customer_id = #{customer_id}</if>
-            <!-- <if test="customer_id != null">AND customer_id = #{customer_id}</if> -->
+            <if test="status != null">r.status = #{status}</if>
+            <if test="product_id != null">AND r.product_id = #{product_id}</if>
+            <if test="customer_id != null">AND r.customer_id = #{customer_id}</if>
+            <if test="searchText != null">
+                AND r.comment like '%${searchText}%'
+                OR CONCAT_WS(' ', c.first_name, c.last_name) like '%${searchText}%'
+            </if>
         </where>
     </select>
 

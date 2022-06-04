@@ -16,7 +16,8 @@ public interface ProductMapper {
     @Param("sales_gt") Integer sales_gt,
     @Param("sales_lte") Integer sales_lte,
     @Param("stock_gt") Integer stock_gt,
-    @Param("stock_lt") Integer stock_lt
+    @Param("stock_lt") Integer stock_lt,
+    @Param("searchText") String searchText
   );
 
   public String getProductCount(
@@ -24,7 +25,8 @@ public interface ProductMapper {
     @Param("sales_gt") Integer sales_gt,
     @Param("sales_lte") Integer sales_lte,
     @Param("stock_gt") Integer stock_gt,
-    @Param("stock_lt") Integer stock_lt
+    @Param("stock_lt") Integer stock_lt,
+    @Param("searchText") String searchText
   );
 
   public List<Product> getManyProducts(List<Long> ids);

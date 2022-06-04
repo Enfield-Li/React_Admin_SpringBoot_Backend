@@ -5,10 +5,14 @@
         SELECT * FROM product
         <where>
             <if test="category_id != null">category_id = #{category_id}</if>
-            <if test="sales_gt != null"> AND sales > #{sales_gt} </if>
-            <if test="sales_lte != null"> AND sales <![CDATA[ < ]]> #{sales_lte} </if>
+            <if test="sales_gt != null">AND sales > #{sales_gt} </if>
+            <if test="sales_lte != null">AND sales <![CDATA[ < ]]> #{sales_lte} </if>
             <if test="stock_gt != null">AND stock > #{stock_gt} </if>
-            <if test="stock_lt != null"> AND stock <![CDATA[ < ]]> #{stock_lt} </if>
+            <if test="stock_lt != null">AND stock <![CDATA[ < ]]> #{stock_lt} </if>
+            <if test="searchText != null">
+                AND description like '%${searchText}%'
+                OR reference like '%${searchText}%'
+            </if>
         </where>
         ORDER BY ${sort} ${order}
         LIMIT #{take}
@@ -23,6 +27,10 @@
             <if test="sales_lte != null"> AND sales <![CDATA[ < ]]> #{sales_lte} </if>
             <if test="stock_gt != null">AND stock > #{stock_gt} </if>
             <if test="stock_lt != null"> AND stock <![CDATA[ < ]]> #{stock_lt} </if>
+            <if test="searchText != null">
+                AND description like '%${searchText}%'
+                OR reference like '%${searchText}%'
+            </if>
         </where>
     </select>
 

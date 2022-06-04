@@ -59,10 +59,16 @@ class ReviewController {
       order,
       null,
       null,
-      customer_id
+      customer_id,
+      null
     );
 
-    String reviewCount = reviewMapper.getReviewCount(null, null, customer_id);
+    String reviewCount = reviewMapper.getReviewCount(
+      null,
+      null,
+      customer_id,
+      null
+    );
 
     return ResponseEntity
       .ok()
@@ -87,10 +93,16 @@ class ReviewController {
       order,
       null,
       product_id,
+      null,
       null
     );
 
-    String reviewCount = reviewMapper.getReviewCount(product_id, null, null);
+    String reviewCount = reviewMapper.getReviewCount(
+      product_id,
+      null,
+      null,
+      null
+    );
 
     return ResponseEntity
       .ok()
@@ -104,7 +116,8 @@ class ReviewController {
     @RequestParam(name = "_end") Integer end,
     @RequestParam(name = "_sort") String sort,
     @RequestParam(name = "_order") String order,
-    @RequestParam(name = "status", required = false) String status
+    @RequestParam(name = "status", required = false) String status,
+    @RequestParam(name = "q", required = false) String queryByText
   ) {
     Integer take = end - start;
 
@@ -115,10 +128,16 @@ class ReviewController {
       order,
       status,
       null,
-      null
+      null,
+      queryByText
     );
 
-    String reviewCount = reviewMapper.getReviewCount(null, status, null);
+    String reviewCount = reviewMapper.getReviewCount(
+      null,
+      status,
+      null,
+      queryByText
+    );
 
     return ResponseEntity
       .ok()
@@ -146,7 +165,9 @@ class ReviewController {
       .orElseThrow(NoSuchElementException::new);
 
     if (review.getStatus() != null) updatedReview.setStatus(review.getStatus());
-    if(review.getComment() != null) updatedReview.setComment(review.getComment());
+    if (review.getComment() != null) updatedReview.setComment(
+      review.getComment()
+    );
 
     return ResponseEntity.ok().body(updatedReview);
   }

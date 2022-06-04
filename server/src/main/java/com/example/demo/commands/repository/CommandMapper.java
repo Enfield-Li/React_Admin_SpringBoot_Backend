@@ -26,7 +26,8 @@ public interface CommandMapper {
     @Param("date_lte") String date_lte,
     @Param("customer_id") Long customer_id,
     @Param("total_gte") String total_gte,
-    @Param("returned") Boolean returned
+    @Param("returned") Boolean returned,
+    @Param("searchText") String searchText
   );
 
   public String getCommandCount(
@@ -35,6 +36,7 @@ public interface CommandMapper {
     @Param("date_lte") String date_lte,
     @Param("customer_id") Long customer_id,
     @Param("total_gte") String total_gte,
-    @Param("returned") Boolean returned
+    @Param("returned") Boolean returned,
+    @Param("searchText") String searchText
   );
 }
