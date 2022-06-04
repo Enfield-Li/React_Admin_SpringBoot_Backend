@@ -10,8 +10,12 @@
             <if test="stock_gt != null">AND stock > #{stock_gt} </if>
             <if test="stock_lt != null">AND stock <![CDATA[ < ]]> #{stock_lt} </if>
             <if test="searchText != null">
-                AND description like '%${searchText}%'
-                OR reference like '%${searchText}%'
+                AND 
+                (
+                    description LIKE '%${searchText}%'
+                    OR
+                    reference LIKE '%${searchText}%'
+                )
             </if>
         </where>
         ORDER BY ${sort} ${order}
@@ -28,8 +32,12 @@
             <if test="stock_gt != null">AND stock > #{stock_gt} </if>
             <if test="stock_lt != null"> AND stock <![CDATA[ < ]]> #{stock_lt} </if>
             <if test="searchText != null">
-                AND description like '%${searchText}%'
-                OR reference like '%${searchText}%'
+                AND 
+                (
+                    description LIKE '%${searchText}%'
+                    OR 
+                    reference LIKE '%${searchText}%'
+                )
             </if>
         </where>
     </select>

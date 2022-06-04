@@ -9,8 +9,12 @@
             <if test="product_id != null">AND r.product_id = #{product_id}</if>
             <if test="customer_id != null">AND r.customer_id = #{customer_id}</if>
             <if test="searchText != null">
-                AND r.comment like '%${searchText}%'
-                OR CONCAT_WS(' ', c.first_name, c.last_name) like '%${searchText}%'
+                AND
+                (
+                    r.comment like '%${searchText}%'
+                    OR 
+                    CONCAT_WS(' ', c.first_name, c.last_name) like '%${searchText}%'
+                )
             </if>
         </where>
         ORDER BY r.${sort} ${order}
@@ -26,8 +30,12 @@
             <if test="product_id != null">AND r.product_id = #{product_id}</if>
             <if test="customer_id != null">AND r.customer_id = #{customer_id}</if>
             <if test="searchText != null">
-                AND r.comment like '%${searchText}%'
-                OR CONCAT_WS(' ', c.first_name, c.last_name) like '%${searchText}%'
+                AND
+                (
+                    r.comment like '%${searchText}%'
+                    OR 
+                    CONCAT_WS(' ', c.first_name, c.last_name) like '%${searchText}%'
+                )
             </if>
         </where>
     </select>
