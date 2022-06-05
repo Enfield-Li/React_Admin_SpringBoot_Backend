@@ -36,21 +36,21 @@ public class Customer {
   @Column(nullable = false)
   private String last_name;
 
-  private String address;
-  private String zipcode;
   private String city;
+  private String zipcode;
+  private String address;
 
   private String avatar;
-  private String stateAbbr;
   private Instant birthday;
-  private Instant first_seen;
+  private String stateAbbr;
   private Instant last_seen;
+  private Instant first_seen;
   private Instant latest_purchase;
 
+  private Float total_spent;
+  private Integer nb_commands;
   private Boolean has_ordered;
   private Boolean has_newsletter;
-  private Integer nb_commands;
-  private Float total_spent;
 
   @ManyToMany
   @JoinTable(

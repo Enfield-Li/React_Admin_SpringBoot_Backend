@@ -1,11 +1,15 @@
 package com.example.demo.products.entity;
 
+import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.GenerationType.IDENTITY;
 
+import com.example.demo.category.entity.Category;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -32,7 +36,13 @@ public class Product {
   private Float price;
   private Integer sales;
   private Integer stock;
+
+  @Column(insertable = false, updatable = false)
   private Integer category_id;
+
+  @ManyToOne(cascade = DETACH)
+  @JoinColumn(name = "category_id")
+  private Category category;
 
   public Product() {}
 

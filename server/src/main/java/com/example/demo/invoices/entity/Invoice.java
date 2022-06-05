@@ -1,11 +1,18 @@
 package com.example.demo.invoices.entity;
 
+import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.GenerationType.IDENTITY;
 
+import com.example.demo.commands.entity.Command;
+import com.example.demo.customers.entity.Customer;
 import java.time.Instant;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +37,17 @@ public class Invoice {
   private Float taxes;
   private Float total;
 
+  @Column(insertable = false, updatable = false)
   private Long command_id;
+
+  @Column(insertable = false, updatable = false)
   private Long customer_id;
+
+  @ManyToOne(cascade = DETACH)
+  @JoinColumn(name = "customer_id")
+  private Customer customer;
+
+  @ManyToOne(cascade = DETACH)
+  @JoinColumn(name = "command_id")
+  private Command command;
 }
