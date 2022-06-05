@@ -1,11 +1,11 @@
 package com.example.demo.products;
 
+import com.example.demo.config.exception.ItemNotFoundException;
 import com.example.demo.products.entity.Product;
 import com.example.demo.products.repository.ProductMapper;
 import com.example.demo.products.repository.ProductRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
-import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -107,7 +107,9 @@ class ProductController {
   public ResponseEntity<Product> getById(@PathVariable("id") Long id) {
     Product product = productRepository
       .findById(id)
-      .orElseThrow(NoSuchElementException::new);
+      .orElseThrow(
+        () -> new ItemNotFoundException("Product with id " + id + "not found")
+      );
 
     return ResponseEntity.ok().body(product);
   }

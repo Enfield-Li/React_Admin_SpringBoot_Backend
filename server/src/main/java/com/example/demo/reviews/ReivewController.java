@@ -1,5 +1,6 @@
 package com.example.demo.reviews;
 
+import com.example.demo.config.exception.ItemNotFoundException;
 import com.example.demo.reviews.dto.UpdateReviewStatusDto;
 import com.example.demo.reviews.entity.Review;
 import com.example.demo.reviews.repository.ReviewMapper;
@@ -149,7 +150,9 @@ class ReviewController {
   public ResponseEntity<Review> getById(@PathVariable("id") Long id) {
     Review review = reviewRepository
       .findById(id)
-      .orElseThrow(NoSuchElementException::new);
+      .orElseThrow(
+        () -> new ItemNotFoundException("Review with id " + id + "not found")
+      );
 
     return ResponseEntity.ok().body(review);
   }
@@ -162,7 +165,9 @@ class ReviewController {
   ) {
     Review updatedReview = reviewRepository
       .findById(id)
-      .orElseThrow(NoSuchElementException::new);
+      .orElseThrow(
+        () -> new ItemNotFoundException("Review with id " + id + "not found")
+      );
 
     if (review.getStatus() != null) updatedReview.setStatus(review.getStatus());
     if (review.getComment() != null) updatedReview.setComment(

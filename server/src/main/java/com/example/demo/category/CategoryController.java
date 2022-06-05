@@ -3,10 +3,10 @@ package com.example.demo.category;
 import com.example.demo.category.entity.Category;
 import com.example.demo.category.repository.CategoryMapper;
 import com.example.demo.category.repository.CategoryRepository;
+import com.example.demo.config.exception.ItemNotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -59,7 +59,9 @@ class CategoryController {
   ) {
     Category category = categoryRepository
       .findById(id)
-      .orElseThrow(NoSuchElementException::new);
+      .orElseThrow(
+        () -> new ItemNotFoundException("Category with id " + id + "not found")
+      );
 
     return ResponseEntity.ok().body(Arrays.asList(category));
   }
@@ -68,7 +70,9 @@ class CategoryController {
   public ResponseEntity<Category> getOne(@PathVariable("id") Long id) {
     Category category = categoryRepository
       .findById(id)
-      .orElseThrow(NoSuchElementException::new);
+      .orElseThrow(
+        () -> new ItemNotFoundException("Category with id " + id + "not found")
+      );
 
     return ResponseEntity.ok().body(category);
   }

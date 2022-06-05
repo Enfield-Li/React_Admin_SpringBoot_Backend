@@ -6,11 +6,12 @@ import com.example.demo.commands.entity.Basket;
 import com.example.demo.commands.entity.Command;
 import com.example.demo.commands.repository.CommandMapper;
 import com.example.demo.commands.repository.CommandRepository;
+import com.example.demo.config.exception.ItemNotFoundException;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +115,9 @@ class CommandController {
   public ResponseEntity<Command> getById(@PathVariable("id") Long id) {
     Command command = commandRepository
       .findById(id)
-      .orElseThrow(NoSuchElementException::new);
+      .orElseThrow(
+        () -> new ItemNotFoundException("Order with id " + id + "not found")
+      );
 
     return ResponseEntity.ok().body(command);
   }
