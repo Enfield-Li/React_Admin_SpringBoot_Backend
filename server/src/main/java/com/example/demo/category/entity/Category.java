@@ -17,7 +17,7 @@ public class Category {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
-  private Long id;
+  private Integer id;
 
   private String name;
 }
