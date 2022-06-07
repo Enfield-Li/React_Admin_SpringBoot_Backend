@@ -183,9 +183,4 @@ class ReviewController {
 
     return ResponseEntity.ok().body(true);
   }
-
-  @PostMapping("bulk-insert")
-  public void create(@RequestBody List<Review> item) {
-    reviewRepository.saveAll(item);
-  }
 }

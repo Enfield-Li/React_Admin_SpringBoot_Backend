@@ -55,7 +55,7 @@ class CategoryController {
 
   @GetMapping(params = "id")
   public ResponseEntity<List<Category>> getManyReference(
-    @RequestParam(name = "id") Long id
+    @RequestParam(name = "id") Integer id
   ) {
     Category category = categoryRepository
       .findById(id)
@@ -67,7 +67,7 @@ class CategoryController {
   }
 
   @GetMapping("{id}")
-  public ResponseEntity<Category> getOne(@PathVariable("id") Long id) {
+  public ResponseEntity<Category> getOne(@PathVariable("id") Integer id) {
     Category category = categoryRepository
       .findById(id)
       .orElseThrow(
@@ -79,7 +79,7 @@ class CategoryController {
 
   @PutMapping("{id}")
   public ResponseEntity<Boolean> update(
-    @PathVariable("id") Long id,
+    @PathVariable("id") Integer id,
     @RequestBody Category item
   ) {
     String newName = item.getName();
@@ -89,7 +89,7 @@ class CategoryController {
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
+  public ResponseEntity<Boolean> delete(@PathVariable("id") Integer id) {
     categoryRepository.deleteById(id);
     return ResponseEntity.ok().body(true);
   }

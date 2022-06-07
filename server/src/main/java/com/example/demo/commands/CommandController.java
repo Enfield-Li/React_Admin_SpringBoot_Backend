@@ -7,7 +7,6 @@ import com.example.demo.commands.entity.Command;
 import com.example.demo.commands.repository.CommandMapper;
 import com.example.demo.commands.repository.CommandRepository;
 import com.example.demo.config.exception.ItemNotFoundException;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -194,23 +193,5 @@ class CommandController {
     );
 
     return basketDtoList;
-  }
-
-  @PostMapping("bulk-insert")
-  public void create(@RequestBody List<Command> items) {
-    for (Command item : items) {
-      List<Basket> baskets = item.getBasket();
-
-      List<Basket> newBaskets = new ArrayList<>();
-      baskets.forEach(
-        i -> {
-          newBaskets.add(Basket.of(i.getQuantity(), i.getProduct_id(), item));
-        }
-      );
-
-      item.setBasket(newBaskets);
-
-      commandRepository.save(item);
-    }
   }
 }

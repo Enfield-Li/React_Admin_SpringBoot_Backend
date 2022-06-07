@@ -13,6 +13,6 @@ public interface CategoryMapper {
   @Update("Update category SET name = #{name} WHERE id = #{id}")
   public Integer updateCategoryName(
     @Param("name") String name,
-    @Param("id") Long id
+    @Param("id") Integer id
   );
 }

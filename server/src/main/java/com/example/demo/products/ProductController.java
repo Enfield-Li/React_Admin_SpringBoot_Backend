@@ -1,11 +1,14 @@
 package com.example.demo.products;
 
+import com.example.demo.category.entity.Category;
+import com.example.demo.category.repository.CategoryRepository;
 import com.example.demo.config.exception.ItemNotFoundException;
 import com.example.demo.products.entity.Product;
 import com.example.demo.products.repository.ProductMapper;
 import com.example.demo.products.repository.ProductRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,25 +28,23 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000")
 class ProductController {
 
-  private final ProductRepository productRepository;
   private final ProductMapper productMapper;
+  private final ProductRepository productRepository;
+  private final EntityManager entityManager;
 
   @Autowired
-  ProductController(
+  public ProductController(
+    ProductMapper productMapper,
     ProductRepository productRepository,
-    ProductMapper prouctMapper
+    EntityManager entityManager
   ) {
+    this.productMapper = productMapper;
     this.productRepository = productRepository;
-    this.productMapper = prouctMapper;
+    this.entityManager = entityManager;
   }
 
   @PutMapping("test")
   public void Test() {}
-
-  @PostMapping("bulk-insert")
-  public void bulk(@RequestBody List<Product> item) {
-    productRepository.saveAll(item);
-  }
 
   /* 
     URL example: 
@@ -116,6 +117,11 @@ class ProductController {
 
   @PostMapping
   public ResponseEntity<Product> create(@RequestBody Product item) {
+    Integer categoryId = item.getCategory_id();
+
+    Category category = entityManager.getReference(Category.class, categoryId);
+    item.setCategory(category);
+
     Product createdProduct = productRepository.save(item);
     return ResponseEntity.ok().body(createdProduct);
   }

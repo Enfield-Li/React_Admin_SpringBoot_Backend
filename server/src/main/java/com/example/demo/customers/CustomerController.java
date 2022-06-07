@@ -154,8 +154,10 @@ public class CustomerController {
   }
 
   @PostMapping
-  public void create(@RequestBody List<Customer> item) {
-    customerRepository.saveAll(item);
+  public ResponseEntity<Customer> create(@RequestBody Customer item) {
+    Customer customer = customerRepository.save(item);
+
+    return ResponseEntity.ok().body(customer);
   }
 
   @PutMapping("{id}")
