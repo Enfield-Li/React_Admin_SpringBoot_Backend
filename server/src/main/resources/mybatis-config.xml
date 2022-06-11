@@ -10,10 +10,10 @@
         <package name="com.example.demo.customers.entity" />
     </typeAliases> -->
     <mappers>
-        <mapper resource="com/example/demo/products/repository/ProductMapper.xml" />
-        <mapper resource="com/example/demo/reviews/repository/ReviewMapper.xml" />
-        <mapper resource="com/example/demo/customers/repository/CustomerMapper.xml" />
-        <mapper resource="com/example/demo/commands/repository/CommandMapper.xml" />
-        <mapper resource="com/example/demo/invoices/repository/InvoiceMapper.xml" />
+        <mapper resource="mybatis/ProductMapper.xml" />
+        <mapper resource="mybatis/ReviewMapper.xml" />
+        <mapper resource="mybatis/CustomerMapper.xml" />
+        <mapper resource="mybatis/CommandMapper.xml" />
+        <mapper resource="mybatis/InvoiceMapper.xml" />
     </mappers>
 </configuration>
