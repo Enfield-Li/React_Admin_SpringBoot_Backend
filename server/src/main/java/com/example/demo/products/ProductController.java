@@ -9,9 +9,7 @@ import com.example.demo.products.repository.ProductRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import javax.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,14 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "products")
 @RequestMapping("products")
-@CrossOrigin(origins = "http://localhost:3000")
 class ProductController {
 
   private final ProductMapper productMapper;
   private final ProductRepository productRepository;
   private final EntityManager entityManager;
 
-  @Autowired
   public ProductController(
     ProductMapper productMapper,
     ProductRepository productRepository,

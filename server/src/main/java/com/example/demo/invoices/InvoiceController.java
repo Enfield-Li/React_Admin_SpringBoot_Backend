@@ -5,7 +5,6 @@ import com.example.demo.invoices.repository.InvoiceMapper;
 import com.example.demo.invoices.repository.InvoiceRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,6 @@ class InvoiceController {
   private final InvoiceMapper invoiceMapper;
   private final InvoiceRepository invoiceRepository;
 
-  @Autowired
   InvoiceController(
     InvoiceRepository invoiceRepository,
     InvoiceMapper invoiceMapper

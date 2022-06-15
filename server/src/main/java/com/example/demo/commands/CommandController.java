@@ -13,9 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,13 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "Commands")
 @RequestMapping("/commands")
-@CrossOrigin(origins = "http://localhost:3000")
 class CommandController {
 
   private final CommandRepository commandRepository;
   private final CommandMapper commandMapper;
 
-  @Autowired
   CommandController(
     CommandRepository commandRepository,
     CommandMapper commandMapper

@@ -6,13 +6,10 @@ import com.example.demo.customers.repository.CustomerMapper;
 import com.example.demo.customers.repository.CustomerRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "customers")
 @RequestMapping("customers")
-@CrossOrigin(origins = "http://localhost:3000")
 public class CustomerController {
 
   private final CustomerMapper customerMapper;
@@ -36,7 +32,6 @@ public class CustomerController {
   private static final String TOTAL_SPENT_STR = "total_spent";
   private static final String CUSTOMER_ID_STR = "customer_id";
 
-  @Autowired
   CustomerController(
     CustomerMapper customerMapper,
     CustomerRepository customerRepository
