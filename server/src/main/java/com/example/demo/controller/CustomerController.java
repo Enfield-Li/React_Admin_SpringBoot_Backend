@@ -1,12 +1,13 @@
 package com.example.demo.controller;
 
-import static com.example.demo.utils.Constants.*;
-
 import com.example.demo.dto.CustomerDto;
 import com.example.demo.entity.Customer;
 import com.example.demo.mapper.CustomerMapper;
 import com.example.demo.repository.CustomerRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import static com.example.demo.util.Constants.*;
+
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;

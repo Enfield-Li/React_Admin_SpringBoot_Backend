@@ -1,13 +1,14 @@
 package com.example.demo.controller;
 
-import static com.example.demo.utils.Constants.*;
-
 import com.example.demo.dto.UpdateReviewStatusDto;
 import com.example.demo.entity.Review;
 import com.example.demo.exception.ItemNotFoundException;
 import com.example.demo.mapper.ReviewMapper;
 import com.example.demo.repository.ReviewRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import static com.example.demo.util.Constants.*;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import javax.transaction.Transactional;
@@ -148,9 +149,7 @@ class ReviewController {
   public ResponseEntity<Review> getById(@PathVariable("id") Long id) {
     Review review = reviewRepository
       .findById(id)
-      .orElseThrow(
-        () -> new ItemNotFoundException("Review with id " + id + "not found")
-      );
+      .orElseThrow(() -> new ItemNotFoundException("Review", id));
 
     return ResponseEntity.ok().body(review);
   }
@@ -163,9 +162,7 @@ class ReviewController {
   ) {
     Review updatedReview = reviewRepository
       .findById(id)
-      .orElseThrow(
-        () -> new ItemNotFoundException("Review with id " + id + "not found")
-      );
+      .orElseThrow(() -> new ItemNotFoundException("Review", id));
 
     if (review.getStatus() != null) updatedReview.setStatus(review.getStatus());
     if (review.getComment() != null) updatedReview.setComment(

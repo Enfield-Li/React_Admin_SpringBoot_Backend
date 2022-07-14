@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import static com.example.demo.utils.Constants.*;
-
 import com.example.demo.dto.BasketDto;
 import com.example.demo.dto.CommandDto;
 import com.example.demo.entity.Basket;
@@ -10,6 +8,9 @@ import com.example.demo.exception.ItemNotFoundException;
 import com.example.demo.mapper.CommandMapper;
 import com.example.demo.repository.CommandRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import static com.example.demo.util.Constants.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -112,9 +113,7 @@ class CommandController {
   public ResponseEntity<Command> getById(@PathVariable("id") Long id) {
     Command command = commandRepository
       .findById(id)
-      .orElseThrow(
-        () -> new ItemNotFoundException("Order with id " + id + "not found")
-      );
+      .orElseThrow(() -> new ItemNotFoundException("Order", id));
 
     return ResponseEntity.ok().body(command);
   }

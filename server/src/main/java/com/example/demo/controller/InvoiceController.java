@@ -1,11 +1,12 @@
 package com.example.demo.controller;
 
-import static com.example.demo.utils.Constants.*;
-
 import com.example.demo.entity.Invoice;
 import com.example.demo.mapper.InvoiceMapper;
 import com.example.demo.repository.InvoiceRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import static com.example.demo.util.Constants.*;
+
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

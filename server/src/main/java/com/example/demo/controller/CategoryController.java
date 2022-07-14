@@ -1,12 +1,13 @@
 package com.example.demo.controller;
 
-import static com.example.demo.utils.Constants.*;
-
 import com.example.demo.entity.Category;
 import com.example.demo.exception.ItemNotFoundException;
 import com.example.demo.mapper.CategoryMapper;
 import com.example.demo.repository.CategoryRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import static com.example.demo.util.Constants.*;
+
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -57,9 +58,7 @@ class CategoryController {
   ) {
     Category category = categoryRepository
       .findById(id)
-      .orElseThrow(
-        () -> new ItemNotFoundException("Category with id " + id + "not found")
-      );
+      .orElseThrow(() -> new ItemNotFoundException("Category", id));
 
     return ResponseEntity.ok().body(Arrays.asList(category));
   }
@@ -68,9 +67,7 @@ class CategoryController {
   public ResponseEntity<Category> getOne(@PathVariable("id") Integer id) {
     Category category = categoryRepository
       .findById(id)
-      .orElseThrow(
-        () -> new ItemNotFoundException("Category with id " + id + "not found")
-      );
+      .orElseThrow(() -> new ItemNotFoundException("Category", id));
 
     return ResponseEntity.ok().body(category);
   }

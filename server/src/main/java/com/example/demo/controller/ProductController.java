@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import static com.example.demo.utils.Constants.*;
-
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 import com.example.demo.exception.ItemNotFoundException;
@@ -9,6 +7,9 @@ import com.example.demo.mapper.ProductMapper;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import static com.example.demo.util.Constants.*;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.http.ResponseEntity;
@@ -106,9 +107,7 @@ class ProductController {
   public ResponseEntity<Product> getById(@PathVariable("id") Long id) {
     Product product = productRepository
       .findById(id)
-      .orElseThrow(
-        () -> new ItemNotFoundException("Product with id " + id + "not found")
-      );
+      .orElseThrow(() -> new ItemNotFoundException("Product", id));
 
     return ResponseEntity.ok().body(product);
   }

@@ -18,7 +18,7 @@ import reviews from "./reviews";
 import dataProviderFactory from "./dataProvider";
 import Configuration from "./configuration/Configuration";
 import Segments from "./segments/Segments";
-import simpleRestProvider from "ra-data-json-server"; 
+import simpleRestProvider from "ra-data-json-server";
 import jsonServerProvider from "ra-data-json-server";
 
 const i18nProvider = polyglotI18nProvider((locale) => {
@@ -30,22 +30,23 @@ const i18nProvider = polyglotI18nProvider((locale) => {
   return englishMessages;
 }, "en");
 
-/* 
+/*
  * Official data prvider config
  */
-// const data = dataProviderFactory(process.env.REACT_APP_DATA_PROVIDER || "");
+const originalData = dataProviderFactory(process.env.REACT_APP_DATA_PROVIDER || "");
 
-/* 
+/*
  * Using below data provider to connect to spring boot backend
  */
-const data = simpleRestProvider("http://localhost:3060");
+const myData = simpleRestProvider("http://localhost:3060");
 // const data = jsonServerProvider("http://localhost:3060");
 
 const App = () => {
   return (
     <Admin
       title=""
-      dataProvider={data}
+      dataProvider={originalData}
+      // dataProvider={data}
       authProvider={authProvider}
       dashboard={Dashboard}
       loginPage={Login}
