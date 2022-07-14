@@ -71,11 +71,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        */
       .and()
       .addFilterBefore( // Login
-        new LoginFilter("LOGIN_ENDPOINT", authenticationManager()),
+        new LoginFilter(LOGIN_ENDPOINT, authenticationManager()),
         UsernamePasswordAuthenticationFilter.class
       )
       .addFilterBefore( // Logout
-        new LogoutFilter("LOGOUT_ENDPOINT"),
+        new LogoutFilter(LOGOUT_ENDPOINT),
         UsernamePasswordAuthenticationFilter.class
       )
       .addFilterBefore( // Verify user on every request

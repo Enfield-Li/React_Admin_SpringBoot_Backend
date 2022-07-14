@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Admin, CustomRoutes, Resource } from "react-admin";
+import { Admin, CustomRoutes, fetchUtils, Resource } from "react-admin";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import { Route } from "react-router";
 
@@ -21,6 +21,7 @@ import Segments from "./segments/Segments";
 import simpleRestProvider from "ra-data-json-server";
 import jsonServerProvider from "ra-data-json-server";
 import { me, myAuth } from "./myAuth";
+import * as ra_core from "ra-core";
 
 const i18nProvider = polyglotI18nProvider((locale) => {
   if (locale === "fr") {
@@ -36,7 +37,13 @@ const dataProvider = dataProviderFactory(
   process.env.REACT_APP_DATA_PROVIDER || ""
 );
 
-const myData = simpleRestProvider("http://localhost:3060");
+// https://stackoverflow.com/questions/72637511/react-admin-unable-to-include-credtials-in-dataprovider-with-typescript/72638247#72638247
+const httpClient = (url: any, options = {} as ra_core.Options) => {
+  options.credentials = "include";
+  return fetchUtils.fetchJson(url, options);
+};
+
+const myData = simpleRestProvider("http://localhost:3060", httpClient);
 
 const App = () => {
   React.useEffect(() => {

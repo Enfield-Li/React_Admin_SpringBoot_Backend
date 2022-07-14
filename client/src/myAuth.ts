@@ -10,7 +10,7 @@ type User = {
 export const myAuth: AuthProvider = {
   login: async ({ username, password }) => {
     try {
-      const res = await fetch("http://localhost:3080/user_auth/login", {
+      const res = await fetch("http://localhost:3060/user_auth/login", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -30,7 +30,7 @@ export const myAuth: AuthProvider = {
   },
   logout: () => {
     try {
-      fetch("http://localhost:3080/user_auth/logout", {
+      fetch("http://localhost:3060/user_auth/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -67,7 +67,7 @@ export async function me() {
     const storedUser = localStorage.getItem("user");
     if (!storedUser) return;
 
-    const res = await fetch(`http://localhost:3080/user_auth/me`, {
+    const res = await fetch(`http://localhost:3060/user_auth/me`, {
       method: "GET",
       credentials: "include",
     });

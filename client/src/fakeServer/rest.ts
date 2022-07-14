@@ -1,5 +1,5 @@
 import FakeRest from "fakerest";
-import fetchMock from "fetch-mock";
+// import fetchMock from "fetch-mock";
 import generateData from "data-generator-retail";
 
 export default () => {
@@ -10,6 +10,6 @@ export default () => {
   }
   restServer.init(data);
   restServer.toggleLogging(); // logging is off by default, enable it
-  fetchMock.mock("begin:http://localhost:4000", restServer.getHandler());
-  return () => fetchMock.restore();
+  // fetchMock.mock("begin:http://localhost:4000", restServer.getHandler());
+  // return () => fetchMock.restore();
 };
