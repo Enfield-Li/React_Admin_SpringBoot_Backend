@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class LoginSaleDto {
+public class LoginUserDto {
 
   @NotNull
   private String username;

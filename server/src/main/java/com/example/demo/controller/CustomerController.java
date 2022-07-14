@@ -1,13 +1,12 @@
 package com.example.demo.controller;
 
+import static com.example.demo.util.Constants.*;
+
 import com.example.demo.dto.CustomerDto;
 import com.example.demo.entity.Customer;
 import com.example.demo.mapper.CustomerMapper;
 import com.example.demo.repository.CustomerRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import static com.example.demo.util.Constants.*;
-
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
@@ -48,26 +47,6 @@ public class CustomerController {
     customerRepository.save(item);
   }
 
-  /* 
-    URL example:
-    http://localhost:3060/customers?_end=25&_order=DESC&_sort=last_seen&_start=0
-  
-    * include last visited * 
-    http://localhost:3060/customers?_end=25&_order=DESC&_sort=last_seen&_start=0&last_seen_gte=2022-06-01T15:59:59.999Z
-    http://localhost:3060/customers?_end=25&_order=DESC&_sort=last_seen&_start=0&last_seen_gte=2022-04-30T16:00:00.000Z&last_seen_lte=2022-05-31T16:00:00.000Z
-    http://localhost:3060/customers?_end=25&_order=DESC&_sort=last_seen&_start=0&last_seen_lte=2022-04-30T16:00:00.000Z
-  
-    * include has ordered *
-    http://localhost:3060/customers?_end=25&_order=DESC&_sort=last_seen&_start=0&nb_commands_lte=0
-    http://localhost:3060/customers?_end=25&_order=DESC&_sort=last_seen&_start=0&nb_commands_gte=1
-  
-    * include has newsletter *
-    http://localhost:3060/customers?_end=25&_order=DESC&_sort=last_seen&_start=0&has_newsletter=false
-    http://localhost:3060/customers?_end=25&_order=DESC&_sort=last_seen&_start=0&has_newsletter=true
-  
-    * include segment *
-    http://localhost:3060/customers?_end=25&_order=DESC&_sort=last_seen&_start=0&groups=collector
-   */
   @GetMapping(params = { "_start", "_end", "_sort", "_order" })
   public ResponseEntity<List<CustomerDto>> getAll(
     @RequestParam(name = "_start") Integer start,

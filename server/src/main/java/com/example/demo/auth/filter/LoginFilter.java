@@ -1,12 +1,11 @@
 package com.example.demo.auth.filter;
 
-import com.example.demo.auth.user.ApplicationUser;
-import com.example.demo.dto.LoginSaleDto;
-import com.example.demo.dto.SaleResponseDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static com.example.demo.util.Constants.*;
 
+import com.example.demo.dto.LoginUserDto;
+import com.example.demo.dto.UserLoginResponseDto;
+import com.example.demo.entity.ApplicationUser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,8 +31,8 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     HttpServletResponse res
   )
     throws AuthenticationException, IOException {
-    LoginSaleDto dto = new ObjectMapper()
-    .readValue(req.getInputStream(), LoginSaleDto.class);
+    LoginUserDto dto = new ObjectMapper()
+    .readValue(req.getInputStream(), LoginUserDto.class);
     System.out.println(dto.toString());
 
     return getAuthenticationManager()
@@ -58,6 +57,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     req.getSession().setAttribute(ApplicationUserInSession, applicationUser);
 
     res.setContentType("application/json");
-    res.getOutputStream().print(SaleResponseDto.toJSON(applicationUser));
+    res.getOutputStream().print(UserLoginResponseDto.toJSON(applicationUser));
   }
 }

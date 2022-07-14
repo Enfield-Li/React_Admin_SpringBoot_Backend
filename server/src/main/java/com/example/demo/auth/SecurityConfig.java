@@ -51,8 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .authorizeRequests()
       .antMatchers(
         "/",
-        "TEST_ENDPOINT",
-        "REGISTER_ENDPOINT",
+        TEST_ENDPOINT,
+        REGISTER_ENDPOINT,
         SWAGGER_UI_PATH_1,
         SWAGGER_UI_PATH_2
       )

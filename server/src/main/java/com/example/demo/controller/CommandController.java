@@ -47,13 +47,6 @@ class CommandController {
   @Transactional
   public void Test() {}
 
-  /*
-   *  URL example:
-   *  http://localhost:3060/commands?_end=1&_order=ASC&_sort=id&_start=0&status=delivere
-   *  http://localhost:3060/commands?_end=1&_order=ASC&_sort=id&_start=0&status=ordered
-   *  http://localhost:3060/commands?_end=1&_order=ASC&_sort=id&_start=0&status=cancelled
-   *  http://localhost:3060/commands?_end=50&_order=DESC&_sort=date&_start=0&date_gte=2022-05-02T16:00:00.000Z
-   */
   @GetMapping(params = { "_start", "_end", "_sort", "_order" })
   public ResponseEntity<List<CommandDto>> getAll(
     @RequestParam(name = "_end") Integer end,

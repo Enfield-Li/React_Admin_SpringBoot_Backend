@@ -1,7 +1,5 @@
 package com.example.demo.auth.filter;
 
-import com.example.demo.auth.user.ApplicationUser;
-
 import static com.example.demo.util.Constants.*;
 
 import java.io.IOException;
@@ -15,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
+
+import com.example.demo.entity.ApplicationUser;
 
 public class AuthenticationFilter extends GenericFilterBean {
 

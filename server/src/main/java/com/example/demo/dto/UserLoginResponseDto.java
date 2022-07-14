@@ -1,13 +1,13 @@
 package com.example.demo.dto;
 
-import com.example.demo.auth.user.ApplicationUser;
+import com.example.demo.entity.ApplicationUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class SaleResponseDto {
+public class UserLoginResponseDto {
 
   @NotNull
   private Long id;
@@ -18,14 +18,14 @@ public class SaleResponseDto {
   @NotNull
   private String avatar;
 
-  public SaleResponseDto(ApplicationUser user) {
+  public UserLoginResponseDto(ApplicationUser user) {
     this.id = user.getId();
     this.fullName = user.getUsername();
     this.avatar = "https://robohash.org/" + user.getUsername() + ".png";
   }
 
   public static String toJSON(ApplicationUser user) throws IOException {
-    SaleResponseDto dto = new SaleResponseDto(user);
+    UserLoginResponseDto dto = new UserLoginResponseDto(user);
     return new ObjectMapper().writeValueAsString(dto);
   }
 }

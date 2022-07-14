@@ -1,5 +1,6 @@
-package com.example.demo.auth.user;
+package com.example.demo.entity;
 
+import com.example.demo.auth.user.ApplicationUserRole;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,23 +9,28 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @Entity
-public
-class ApplicationUser implements UserDetails {
+public class ApplicationUser implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotNull
+  @Column(unique = true)
   private String username;
+
+  @NotNull
   private String password;
 
-  @Column(length = 20)
+  @NotNull
+  @Column(length = 20, nullable = false)
   @Enumerated(EnumType.STRING)
   private ApplicationUserRole role;
 
