@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.products.repository.ProductMapper">
-    <select id="getPaginatedProducts" resultType="com.example.demo.products.entity.Product">
+<mapper namespace="com.example.demo.mapper.ProductMapper">
+    <select id="getPaginatedProducts" resultType="com.example.demo.entity.Product">
         SELECT * FROM product
         <where>
             <if test="category_id != null">category_id = #{category_id}</if>
@@ -42,7 +42,7 @@
         </where>
     </select>
 
-    <select id="getManyProducts" resultType="com.example.demo.products.entity.Product">
+    <select id="getManyProducts" resultType="com.example.demo.entity.Product">
         SELECT *
         FROM product
         WHERE id IN

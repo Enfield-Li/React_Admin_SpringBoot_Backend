@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.commands.repository.CommandMapper">
-    <select id="getPaginatedcommands" resultType="com.example.demo.commands.dto.CommandDto">
+<mapper namespace="com.example.demo.mapper.CategoryMapper">
+    <select id="getPaginatedcommands" resultType="com.example.demo.dto.CommandDto">
         SELECT c.*, 
         group_concat( CONCAT(b.product_id, ',' , b.quantity) ) 
         AS productId_quantity 
@@ -50,7 +50,7 @@
         </where>
     </select>
 
-    <select id="getManyCommands" resultType="com.example.demo.commands.entity.Command">
+    <select id="getManyCommands" resultType="com.example.demo.entity.Command">
         SELECT *
         FROM command
         WHERE id IN
@@ -59,7 +59,7 @@
         </foreach>
     </select>
 
-    <select id="updateCommand" resultType="com.example.demo.commands.entity.Command">
+    <select id="updateCommand" resultType="com.example.demo.entity.Command">
         UPDATE command 
         <set>
             <if test="status != null">
