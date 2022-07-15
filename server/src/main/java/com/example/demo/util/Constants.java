@@ -20,10 +20,9 @@ public class Constants {
   public static final String LOGIN_ENDPOINT = USER_AUTH + LOGIN;
   public static final String LOGOUT_ENDPOINT = USER_AUTH + LOGOUT;
   public static final String REGISTER_ENDPOINT = USER_AUTH + REGISTER;
-  public static final String UPDATE_SALE_ENDPOINT = USER_AUTH + UPDATE_ROLE;
+  public static final String UPDATE_USER_ENDPOINT = USER_AUTH + UPDATE_ROLE;
 
   public static final String SWAGGER_UI_PATH_1 = "/swagger-ui/**";
   public static final String SWAGGER_UI_PATH_2 = "/v3/api-docs/**";
-  public static final String ApplicationUserInSession =
-    "application_user_in_session";
+  public static final String UserSessionKey = "user_session_key";
 }

@@ -61,11 +61,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        * 认证部分（Authorization）
        */
       // Authorities based permission
-      //   .antMatchers(HttpMethod.POST, TAGS_ENDPOINT)
-      //   .hasAuthority(CREATE_TAG.getPermission())
+      .antMatchers(HttpMethod.GET, COMMANDS_ENDPOINT, INVOICES_ENDPOINT)
+      .hasAuthority(READ_SALES.getPermission())
+      .antMatchers(HttpMethod.PUT, COMMANDS_ENDPOINT, INVOICES_ENDPOINT)
+      .hasAuthority(WRITE_SALES.getPermission())
+      .antMatchers(HttpMethod.PUT, REVIEWS_ENDPOINT)
+      .hasAuthority(WRITE_REVIEWS.getPermission())
+      .antMatchers(HttpMethod.DELETE, REVIEWS_ENDPOINT)
+      .hasAuthority(WRITE_REVIEWS.getPermission())
+      .antMatchers(HttpMethod.PUT, CATEGORIES_ENDPOINT)
+      .hasAuthority(WRITE_CATEGORIES.getPermission())
       // Role based permission
-      //   .antMatchers(UPDATE_SALE_ENDPOINT)
-      //   .hasRole(SUPER_USER.name())
+      .antMatchers(UPDATE_USER_ENDPOINT)
+      .hasRole(ADMIN.name())
       /*
        * 授权部分（Authentication）
        */

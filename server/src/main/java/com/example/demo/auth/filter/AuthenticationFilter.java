@@ -2,6 +2,7 @@ package com.example.demo.auth.filter;
 
 import static com.example.demo.util.Constants.*;
 
+import com.example.demo.entity.ApplicationUser;
 import java.io.IOException;
 import java.util.Enumeration;
 import javax.servlet.FilterChain;
@@ -13,8 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
-
-import com.example.demo.entity.ApplicationUser;
 
 public class AuthenticationFilter extends GenericFilterBean {
 
@@ -34,18 +33,18 @@ public class AuthenticationFilter extends GenericFilterBean {
     //   System.out.println(attribute + " : " + session.getAttribute(attribute));
     // }
 
-    ApplicationUser user = (ApplicationUser) session.getAttribute(
-      ApplicationUserInSession
+    ApplicationUser applicationUser = (ApplicationUser) session.getAttribute(
+      UserSessionKey
     );
 
-    if (user != null) {
-      UsernamePasswordAuthenticationToken authUser = new UsernamePasswordAuthenticationToken(
-        user.getUsername(),
-        user.getPassword(),
-        user.getAuthorities()
+    if (applicationUser != null) {
+      UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+        applicationUser.getUsername(),
+        applicationUser.getPassword(),
+        applicationUser.getAuthorities()
       );
 
-      SecurityContextHolder.getContext().setAuthentication(authUser);
+      SecurityContextHolder.getContext().setAuthentication(authToken);
     }
 
     filterChain.doFilter(request, response);

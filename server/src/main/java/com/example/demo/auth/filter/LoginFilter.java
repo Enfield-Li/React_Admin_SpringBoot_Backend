@@ -16,12 +16,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
   public LoginFilter(String url, AuthenticationManager authManager) {
-    super(new AntPathRequestMatcher(url));
+    super(url);
     setAuthenticationManager(authManager);
   }
 
@@ -31,15 +30,14 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     HttpServletResponse res
   )
     throws AuthenticationException, IOException {
-    LoginUserDto dto = new ObjectMapper()
+    LoginUserDto loginUserDto = new ObjectMapper()
     .readValue(req.getInputStream(), LoginUserDto.class);
-    System.out.println(dto.toString());
 
     return getAuthenticationManager()
       .authenticate(
         new UsernamePasswordAuthenticationToken(
-          dto.getUsername(),
-          dto.getPassword()
+          loginUserDto.getUsername(),
+          loginUserDto.getPassword()
         )
       );
   }
@@ -54,7 +52,7 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     throws IOException, ServletException {
     ApplicationUser applicationUser = (ApplicationUser) auth.getPrincipal();
 
-    req.getSession().setAttribute(ApplicationUserInSession, applicationUser);
+    req.getSession().setAttribute(UserSessionKey, applicationUser);
 
     res.setContentType("application/json");
     res.getOutputStream().print(UserLoginResponseDto.toJSON(applicationUser));

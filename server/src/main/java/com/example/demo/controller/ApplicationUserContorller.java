@@ -74,7 +74,7 @@ class ApplicationUserController {
       newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
 
       ApplicationUser savedUser = userRepo.save(newUser);
-      session.setAttribute(ApplicationUserInSession, savedUser);
+      session.setAttribute(UserSessionKey, savedUser);
 
       return ResponseEntity.ok(
         new UserRegisterResponseDto(new UserLoginResponseDto(savedUser), null)
